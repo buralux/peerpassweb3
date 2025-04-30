@@ -16,6 +16,7 @@ import { queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useWallet } from "@/hooks/use-wallet";
 import { useLocation } from "wouter";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Extend the schema for the form
 const createCardFormSchema = createBusinessCardSchema.extend({
@@ -29,6 +30,7 @@ const CreateCardSection: React.FC = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentStep, setCurrentStep] = useState<'template' | 'details' | 'preview' | 'social'>('template');
   
   // Initialize form with default values
   const form = useForm<CreateCardFormData>({
@@ -136,14 +138,33 @@ const CreateCardSection: React.FC = () => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
+
+  // Navigate to next step
+  const goToNextStep = () => {
+    if (currentStep === 'template') setCurrentStep('details');
+    else if (currentStep === 'details') setCurrentStep('social');
+    else if (currentStep === 'social') setCurrentStep('preview');
+  };
+
+  // Navigate to previous step
+  const goToPrevStep = () => {
+    if (currentStep === 'preview') setCurrentStep('social');
+    else if (currentStep === 'social') setCurrentStep('details');
+    else if (currentStep === 'details') setCurrentStep('template');
+  };
   
   return (
-    <div className="my-8 bg-white dark:bg-darkSurface rounded-xl overflow-hidden card-shadow">
-      <div className="bg-primary dark:bg-primary/80 text-white p-4">
-        <h2 className="font-heading font-bold text-xl">Create New Card</h2>
-        <p className="text-blue-100 text-sm">Design your professional NFT business card</p>
+    <div className="max-w-4xl mx-auto my-8 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl">
+      {/* Header with Gradient */}
+      <div className="bg-gradient-to-r from-primary to-purple-600 p-6 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
+        
+        <h2 className="font-bold text-2xl relative">Create New Card</h2>
+        <p className="text-blue-100 text-sm relative">Design your professional NFT business card</p>
       </div>
       
+      {/* Main Content */}
       <div className="p-6">
         {!wallet?.address && (
           <Alert variant="destructive" className="mb-6">
@@ -154,229 +175,617 @@ const CreateCardSection: React.FC = () => {
           </Alert>
         )}
         
-        {/* Template Selection */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-800 dark:text-white mb-3">Select Template</h3>
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
-            {CARD_TEMPLATES.map((template) => (
-              <div 
-                key={template.id}
-                className={`border-2 ${
-                  selectedTemplate === template.id 
-                    ? "border-primary" 
-                    : "border-transparent hover:border-primary"
-                } rounded-lg p-1 cursor-pointer`}
-                onClick={() => handleTemplateChange(template.id)}
-              >
-                <div className={`bg-gradient-to-br ${
-                  COLOR_SCHEMES.find(c => c.id === (
-                    template.id === "professional" ? "blue-violet" :
-                    template.id === "creative" ? "teal-emerald" :
-                    template.id === "bold" ? "amber-red" :
-                    template.id === "modern" ? "purple-pink" :
-                    "gray-dark"
-                  ))?.colors.join(" ")
-                } h-24 rounded-md`}></div>
-                <p className="text-center text-xs mt-1 text-gray-700 dark:text-gray-300">{template.name}</p>
-              </div>
+        {/* Step Indicator */}
+        <div className="mb-8">
+          <div className="flex justify-between items-center">
+            {['template', 'details', 'social', 'preview'].map((step, index) => (
+              <React.Fragment key={step}>
+                {/* Step circle */}
+                <div 
+                  className={`flex flex-col items-center cursor-pointer`}
+                  onClick={() => setCurrentStep(step as any)}
+                >
+                  <div className={`
+                    w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium
+                    ${currentStep === step 
+                      ? 'bg-gradient-to-r from-primary to-purple-600 text-white' 
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}
+                  `}>
+                    {index + 1}
+                  </div>
+                  <span className={`mt-2 text-xs ${
+                    currentStep === step 
+                      ? 'text-primary font-medium' 
+                      : 'text-gray-500'
+                  }`}>
+                    {step.charAt(0).toUpperCase() + step.slice(1)}
+                  </span>
+                </div>
+                
+                {/* Connector line */}
+                {index < 3 && (
+                  <div className={`flex-1 h-0.5 mx-2 ${
+                    index < ['template', 'details', 'social', 'preview'].indexOf(currentStep)
+                      ? 'bg-primary' 
+                      : 'bg-gray-200 dark:bg-gray-700'
+                  }`} />
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
         
-        {/* Card Preview */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-800 dark:text-white mb-3">Preview</h3>
-          <div className="mx-auto max-w-sm">
-            <BusinessCard card={previewCard} isPreview={true} />
-          </div>
-        </div>
-        
-        {/* Card Details Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
-              <h3 className="font-medium text-gray-800 dark:text-white mb-3">Card Details</h3>
-              
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Your full name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            {/* Template Selection Step */}
+            {currentStep === 'template' && (
+              <div className="space-y-6">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Choose a Template</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">Select a template style for your NFT business card.</p>
                   
-                  <FormField
-                    control={form.control}
-                    name="jobTitle"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Title</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Your job title" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                
-                <FormField
-                  control={form.control}
-                  name="company"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your company name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="bio"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bio</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Short description about you or your company" 
-                          rows={2}
-                          {...field} 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="your.email@example.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone</FormLabel>
-                        <FormControl>
-                          <Input type="tel" placeholder="Your phone number" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                
-                <FormField
-                  control={form.control}
-                  name="avatarUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Avatar URL</FormLabel>
-                      <FormControl>
-                        <Input placeholder="URL to your profile image" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div>
-                  <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Connect Social Accounts
-                  </FormLabel>
-                  <div className="flex flex-wrap gap-3">
-                    {SOCIAL_PLATFORMS.map((platform) => (
-                      <Button
-                        key={platform.id}
-                        type="button"
-                        variant="outline"
-                        className="flex items-center space-x-2 border border-gray-300 dark:border-gray-700 rounded-lg p-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
-                        onClick={() => {
-                          const url = window.prompt(`Enter your ${platform.name} URL:`);
-                          if (url) {
-                            const currentSocialLinks = form.getValues("socialLinks") || {};
-                            form.setValue("socialLinks", {
-                              ...currentSocialLinks,
-                              [platform.id]: url,
-                            });
-                          }
-                        }}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {CARD_TEMPLATES.map((template) => (
+                      <div 
+                        key={template.id}
+                        className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 group ${
+                          selectedTemplate === template.id 
+                            ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
+                            : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                        }`}
+                        onClick={() => handleTemplateChange(template.id)}
                       >
-                        <span className="material-icons">{platform.icon}</span>
-                        <span className="text-gray-700 dark:text-gray-300">{platform.name}</span>
-                      </Button>
+                        {/* Template preview */}
+                        <div className={`aspect-[3/4] bg-gradient-to-br ${
+                          COLOR_SCHEMES.find(c => c.id === (
+                            template.id === "professional" ? "blue-violet" :
+                            template.id === "creative" ? "teal-emerald" :
+                            template.id === "bold" ? "amber-red" :
+                            template.id === "modern" ? "purple-pink" :
+                            "gray-dark"
+                          ))?.colors.join(" ")
+                        }`}>
+                          <div className="w-full h-full flex flex-col justify-between p-3">
+                            <div className="flex items-center bg-white/20 rounded-lg p-1">
+                              <div className="w-6 h-6 rounded-full bg-white/30 mr-2"></div>
+                              <div className="flex-1">
+                                <div className="h-2 w-12 bg-white/30 rounded-full"></div>
+                                <div className="h-2 w-8 bg-white/30 rounded-full mt-1"></div>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-1">
+                              <div className="h-2 w-full bg-white/20 rounded-full"></div>
+                              <div className="h-2 w-3/4 bg-white/20 rounded-full"></div>
+                              <div className="flex justify-between mt-2">
+                                <div className="h-4 w-4 rounded-full bg-white/20"></div>
+                                <div className="h-4 w-4 rounded-full bg-white/20"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Selected overlay */}
+                        {selectedTemplate === template.id && (
+                          <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                            <div className="bg-white rounded-full p-1">
+                              <span className="material-icons text-primary">check</span>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Title */}
+                        <div className="p-2 bg-white dark:bg-gray-800 text-center">
+                          <p className="font-medium text-sm text-gray-800 dark:text-white">{template.name}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">{template.description}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
                 
-                <div>
-                  <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Customize Colors
-                  </FormLabel>
-                  <div className="flex gap-3">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Pick a Color Scheme</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">Set the color palette for your NFT business card.</p>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {COLOR_SCHEMES.map((scheme) => (
                       <button
                         key={scheme.id}
                         type="button"
-                        className={`w-8 h-8 rounded-full bg-gradient-to-br ${scheme.colors.join(" ")} border-2 ${
-                          selectedColorScheme === scheme.id 
-                            ? "border-white shadow" 
-                            : "border-transparent"
-                        }`}
                         onClick={() => handleColorSchemeChange(scheme.id)}
-                      ></button>
+                        className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 ${
+                          selectedColorScheme === scheme.id 
+                            ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
+                            : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                        }`}
+                      >
+                        <div className={`h-24 bg-gradient-to-br ${scheme.colors.join(" ")}`}></div>
+                        <div className="p-2 bg-white dark:bg-gray-800 text-center">
+                          <p className="font-medium text-sm text-gray-800 dark:text-white">{scheme.name}</p>
+                        </div>
+                        
+                        {selectedColorScheme === scheme.id && (
+                          <div className="absolute top-2 right-2 bg-white rounded-full p-1">
+                            <span className="material-icons text-primary text-sm">check</span>
+                          </div>
+                        )}
+                      </button>
                     ))}
-                    <button
-                      type="button"
-                      className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center"
-                      onClick={() => {
-                        alert("Custom color schemes will be available in a future update!");
-                      }}
-                    >
-                      <span className="material-icons text-gray-400 text-lg">add</span>
-                    </button>
                   </div>
                 </div>
                 
-                <div className="pt-4">
+                <div className="flex justify-end mt-6">
                   <Button
-                    type="submit"
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center"
-                    disabled={isSubmitting || !wallet?.address}
+                    type="button"
+                    onClick={goToNextStep}
+                    className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg"
                   >
-                    <span className="material-icons mr-2">generating_tokens</span>
-                    Create NFT Card
+                    Next Step
+                    <span className="material-icons ml-2">arrow_forward</span>
                   </Button>
-                  <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    This will prepare your card for minting as an NFT on BNB Chain Testnet
-                  </p>
                 </div>
               </div>
-            </div>
+            )}
+            
+            {/* Personal Details Step */}
+            {currentStep === 'details' && (
+              <div className="space-y-6">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Personal Information</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">Enter your basic professional details.</p>
+                  
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">Full Name</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                  <span className="material-icons text-sm">person</span>
+                                </span>
+                                <Input 
+                                  placeholder="Your full name" 
+                                  className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                  {...field} 
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="jobTitle"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">Job Title</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                  <span className="material-icons text-sm">work</span>
+                                </span>
+                                <Input 
+                                  placeholder="Your job title" 
+                                  className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                  {...field} 
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">Company</FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                <span className="material-icons text-sm">business</span>
+                              </span>
+                              <Input 
+                                placeholder="Your company name" 
+                                className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                {...field} 
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="bio"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">Bio</FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <span className="absolute left-3 top-3 text-gray-400">
+                                <span className="material-icons text-sm">description</span>
+                              </span>
+                              <Textarea 
+                                placeholder="Short description about you or your company" 
+                                rows={3}
+                                className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none" 
+                                {...field} 
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">Email</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                  <span className="material-icons text-sm">mail</span>
+                                </span>
+                                <Input 
+                                  type="email" 
+                                  placeholder="your.email@example.com" 
+                                  className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                  {...field} 
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">Phone</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                  <span className="material-icons text-sm">phone</span>
+                                </span>
+                                <Input 
+                                  type="tel" 
+                                  placeholder="Your phone number" 
+                                  className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                  {...field} 
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between mt-6">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={goToPrevStep}
+                    className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
+                  >
+                    <span className="material-icons mr-2">arrow_back</span>
+                    Previous
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    onClick={goToNextStep}
+                    className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center"
+                  >
+                    Next Step
+                    <span className="material-icons ml-2">arrow_forward</span>
+                  </Button>
+                </div>
+              </div>
+            )}
+            
+            {/* Social Links Step */}
+            {currentStep === 'social' && (
+              <div className="space-y-6">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Profile Image & Website</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">Add your professional image and website.</p>
+                  
+                  <div className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="avatarUrl"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">Avatar URL</FormLabel>
+                          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                            <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-gray-800 shadow-md flex-shrink-0">
+                              {field.value ? (
+                                <img 
+                                  src={field.value} 
+                                  alt="Avatar preview" 
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                  <span className="material-icons text-3xl">person</span>
+                                </div>
+                              )}
+                            </div>
+                            
+                            <div className="flex-1">
+                              <FormControl>
+                                <div className="relative">
+                                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    <span className="material-icons text-sm">photo</span>
+                                  </span>
+                                  <Input 
+                                    placeholder="URL to your profile image" 
+                                    className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                    {...field} 
+                                  />
+                                </div>
+                              </FormControl>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Enter a URL to your profile image. For best results, use a square image.
+                              </p>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">Website</FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                <span className="material-icons text-sm">language</span>
+                              </span>
+                              <Input 
+                                placeholder="https://yourwebsite.com" 
+                                className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
+                                {...field} 
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Social Networks</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">Connect your professional social media accounts.</p>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {SOCIAL_PLATFORMS.map((platform) => {
+                      const socialLinks = form.watch("socialLinks") || {};
+                      const isConnected = socialLinks[platform.id];
+                      
+                      return (
+                        <div 
+                          key={platform.id}
+                          className={`rounded-xl border ${isConnected 
+                            ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20' 
+                            : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'
+                          } p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-md transition-all`}
+                          onClick={() => {
+                            const url = window.prompt(`Enter your ${platform.name} URL:`);
+                            if (url) {
+                              const currentSocialLinks = form.getValues("socialLinks") || {};
+                              form.setValue("socialLinks", {
+                                ...currentSocialLinks,
+                                [platform.id]: url,
+                              });
+                            } else if (url === "") {
+                              // Remove if empty string
+                              const currentSocialLinks = form.getValues("socialLinks") || {};
+                              const newSocialLinks = { ...currentSocialLinks };
+                              delete newSocialLinks[platform.id];
+                              form.setValue("socialLinks", newSocialLinks);
+                            }
+                          }}
+                        >
+                          <div className={`w-12 h-12 rounded-full ${isConnected 
+                            ? 'bg-green-100 dark:bg-green-800/50 text-green-600 dark:text-green-400' 
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                          } flex items-center justify-center mb-2`}>
+                            <span className="material-icons text-2xl">{platform.icon}</span>
+                          </div>
+                          
+                          <p className={`font-medium ${isConnected 
+                            ? 'text-green-700 dark:text-green-400' 
+                            : 'text-gray-700 dark:text-gray-300'
+                          }`}>
+                            {platform.name}
+                          </p>
+                          
+                          <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">
+                            {isConnected ? 'Connected' : 'Not Connected'}
+                          </p>
+                          
+                          {isConnected && (
+                            <div className="mt-2 text-xs text-green-600 dark:text-green-400 flex items-center">
+                              <span className="material-icons text-xs mr-1">check_circle</span>
+                              <span>Added</span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                
+                <div className="flex justify-between mt-6">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={goToPrevStep}
+                    className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
+                  >
+                    <span className="material-icons mr-2">arrow_back</span>
+                    Previous
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    onClick={goToNextStep}
+                    className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center"
+                  >
+                    Next Step
+                    <span className="material-icons ml-2">arrow_forward</span>
+                  </Button>
+                </div>
+              </div>
+            )}
+            
+            {/* Preview & Submit Step */}
+            {currentStep === 'preview' && (
+              <div className="space-y-6">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Preview Your Card</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">This is how your NFT business card will look.</p>
+                  
+                  <div className="mx-auto max-w-sm">
+                    <BusinessCard card={previewCard} isPreview={true} />
+                  </div>
+                </div>
+                
+                <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
+                  <h3 className="font-medium text-xl text-primary mb-4 flex items-center">
+                    <span className="material-icons mr-2">generating_tokens</span>
+                    Ready to Mint
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    Your NFT business card will be minted on the BNB Chain Testnet. It will be stored permanently on the blockchain and can be shared with your professional contacts.
+                  </p>
+                  
+                  <div className="flex flex-col md:flex-row gap-4 mb-4">
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center text-gray-700 dark:text-gray-300">
+                        <span className="material-icons text-primary mr-2">token</span>
+                        <span className="font-medium">NFT on BNB Chain</span>
+                      </div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        Your card will be minted as a unique NFT token
+                      </p>
+                    </div>
+                    
+                    <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center text-gray-700 dark:text-gray-300">
+                        <span className="material-icons text-primary mr-2">database</span>
+                        <span className="font-medium">IPFS Stored</span>
+                      </div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        Card data will be stored on IPFS for decentralization
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col md:flex-row justify-between mt-8 gap-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={goToPrevStep}
+                      className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
+                    >
+                      <span className="material-icons mr-2">arrow_back</span>
+                      Previous
+                    </Button>
+                    
+                    <div className="flex flex-col md:flex-row gap-3">
+                      {/* Demo Mode Button */}
+                      <Button
+                        type="button"
+                        className="bg-gradient-to-r from-secondary to-orange-500 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center gap-2"
+                        onClick={() => {
+                          // Simulation de création en mode démo
+                          setIsSubmitting(true);
+                          setTimeout(() => {
+                            toast({
+                              title: "Demo Card Created",
+                              description: "Your demo business card has been created successfully",
+                            });
+                            setIsSubmitting(false);
+                            // Redirection vers la page d'accueil
+                            navigate('/');
+                          }, 1500);
+                        }}
+                      >
+                        <span className="material-icons">visibility</span>
+                        <span>Create in Demo Mode</span>
+                      </Button>
+                      
+                      {/* Real Creation Button */}
+                      <Button
+                        type="submit"
+                        className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center gap-2"
+                        disabled={isSubmitting || !wallet?.address}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <span>Creating...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="material-icons">generating_tokens</span>
+                            <span>Create NFT Card</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {!wallet?.address && (
+                    <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <span className="material-icons text-amber-500">info</span>
+                        <div>
+                          <p className="text-amber-800 dark:text-amber-300 font-medium">Mode Test Actif</p>
+                          <p className="text-sm text-amber-700 dark:text-amber-400">
+                            Le wallet MetaMask est temporairement désactivé pour les tests. Utilisez le mode démo pour créer des cartes de test.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </form>
         </Form>
       </div>

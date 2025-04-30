@@ -56,13 +56,22 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
               </Button>
             </div>
           ) : (
-            <Button 
-              className="flex items-center space-x-1 bg-primary text-white dark:bg-secondary px-3 py-1.5 rounded-full text-sm font-medium"
-              onClick={onConnect}
-            >
-              <span className="material-icons text-sm">account_balance_wallet</span>
-              <span>Connect</span>
-            </Button>
+            <div className="relative">
+              <Button 
+                className="flex items-center space-x-1 bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400 px-3 py-1.5 rounded-full text-sm font-medium opacity-70 cursor-not-allowed"
+                onClick={() => {
+                  // Temporairement désactivé pour les tests
+                  // onConnect();
+                }}
+                disabled
+              >
+                <span className="material-icons text-sm">account_balance_wallet</span>
+                <span>Connect</span>
+              </Button>
+              <div className="absolute -top-1 -right-1 bg-amber-500 text-white text-xs px-1 rounded-full">
+                Test
+              </div>
+            </div>
           )}
         </div>
       </div>

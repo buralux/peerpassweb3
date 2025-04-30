@@ -116,22 +116,34 @@ const CreateCardSection: React.FC = () => {
     form.setValue("colorScheme", schemeId as any);
   };
   
-  // Generate a preview card based on form values
+  // Watch form fields for changes
+  const name = form.watch("name");
+  const jobTitle = form.watch("jobTitle");
+  const company = form.watch("company");
+  const bio = form.watch("bio");
+  const email = form.watch("email");
+  const phone = form.watch("phone");
+  const website = form.watch("website");
+  const avatarUrl = form.watch("avatarUrl");
+  const socialLinks = form.watch("socialLinks");
+  
+  // Generate a preview card based on form values, but also use selectedTemplate and selectedColorScheme
+  // This makes the preview react immediately to template and color scheme changes
   const previewCard = {
     id: 0,
     tokenId: null,
     owner: wallet?.address || "",
-    name: form.watch("name") || "Your Name",
-    jobTitle: form.watch("jobTitle") || "Your Job Title",
-    company: form.watch("company") || "Company Name",
-    bio: form.watch("bio") || "Short bio or company description",
-    email: form.watch("email") || "your.email@example.com",
-    phone: form.watch("phone") || "Your Phone Number",
-    website: form.watch("website") || "",
-    template: form.watch("template"),
-    colorScheme: form.watch("colorScheme"),
-    avatarUrl: form.watch("avatarUrl") || "",
-    socialLinks: form.watch("socialLinks") || {},
+    name: name || "Your Name",
+    jobTitle: jobTitle || "Your Job Title",
+    company: company || "Company Name",
+    bio: bio || "Short bio or company description",
+    email: email || "your.email@example.com",
+    phone: phone || "Your Phone Number",
+    website: website || "",
+    template: selectedTemplate, // Use selectedTemplate instead of form.watch("template")
+    colorScheme: selectedColorScheme, // Use selectedColorScheme instead of form.watch("colorScheme")
+    avatarUrl: avatarUrl || "",
+    socialLinks: socialLinks || {},
     metadata: {},
     ipfsHash: null,
     isMinted: false,

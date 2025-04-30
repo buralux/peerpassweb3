@@ -108,6 +108,8 @@ const CreateCardSection: React.FC = () => {
   const handleTemplateChange = (templateId: string) => {
     setSelectedTemplate(templateId as any);
     form.setValue("template", templateId as any);
+    // Force refresh de l'aperçu
+    setForceRefresh(prev => !prev);
   };
   
   // Color scheme selection
@@ -115,7 +117,12 @@ const CreateCardSection: React.FC = () => {
   const handleColorSchemeChange = (schemeId: string) => {
     setSelectedColorScheme(schemeId as any);
     form.setValue("colorScheme", schemeId as any);
+    // Force refresh de l'aperçu
+    setForceRefresh(prev => !prev);
   };
+  
+  // State pour forcer un refresh de l'aperçu
+  const [forceRefresh, setForceRefresh] = useState(false);
   
   // Watch form fields for changes
   const name = form.watch("name");
@@ -233,41 +240,24 @@ const CreateCardSection: React.FC = () => {
             {/* Template Selection Step */}
             {currentStep === 'template' && (
               <div className="space-y-6">
-                {/* Aperçu flottant fixe (toujours visible lors du défilement) */}
-                <div className="fixed bottom-4 right-4 z-50 md:hidden">
-                  <button 
-                    onClick={() => setShowMobilePreview(!showMobilePreview)}
-                    className="w-14 h-14 rounded-full flex items-center justify-center bg-gradient-to-r from-primary to-purple-600 text-white shadow-lg"
-                  >
-                    <span className="material-icons">{showMobilePreview ? 'close' : 'preview'}</span>
-                  </button>
-                </div>
-                
-                {/* Aperçu plein écran sur mobile */}
-                {showMobilePreview && (
-                  <div className="fixed inset-0 bg-gray-900/90 z-50 p-4 md:hidden flex flex-col">
-                    <div className="text-white flex justify-between items-center mb-4">
-                      <h3 className="text-xl font-medium">Live Preview</h3>
-                      <button 
-                        onClick={() => setShowMobilePreview(false)}
-                        className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-800"
-                      >
-                        <span className="material-icons">close</span>
-                      </button>
-                    </div>
-                    
-                    <div className="flex-1 flex flex-col items-center justify-center">
-                      <div className="w-full max-w-sm transform transition-all">
-                        <BusinessCard card={previewCard} isPreview={true} />
-                      </div>
-                      
-                      <div className="mt-6 pt-4 border-t border-gray-700 w-full max-w-sm">
-                        <h4 className="font-medium text-sm text-gray-300 mb-2">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
-                        <h4 className="font-medium text-sm text-gray-300">Color Scheme: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
-                      </div>
+                {/* Bandeau de prévisualisation au-dessus du contenu sur mobile */}
+                <div className="md:hidden mb-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 shadow-md">
+                  <h3 className="font-medium text-lg text-gray-800 dark:text-white mb-2 flex items-center">
+                    <span className="material-icons mr-2 text-primary">preview</span>
+                    Card Preview
+                  </h3>
+                  
+                  <div className="w-full max-w-sm mx-auto">
+                    <BusinessCard card={{...previewCard, template: selectedTemplate, colorScheme: selectedColorScheme}} key={`${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`} isPreview={true} />
+                  </div>
+                  
+                  <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <div>
+                      <h4 className="font-medium text-xs text-gray-700 dark:text-gray-300">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
+                      <h4 className="font-medium text-xs text-gray-700 dark:text-gray-300">Color: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
                     </div>
                   </div>
-                )}
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -373,7 +363,7 @@ const CreateCardSection: React.FC = () => {
                     <p className="text-gray-600 dark:text-gray-400 mb-6">Your card will look like this.</p>
                     
                     <div className="w-full max-w-sm mx-auto transform transition-all hover:scale-105">
-                      <BusinessCard card={previewCard} isPreview={true} />
+                      <BusinessCard card={{...previewCard, template: selectedTemplate, colorScheme: selectedColorScheme}} key={`${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`} isPreview={true} />
                     </div>
                     
                     <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">

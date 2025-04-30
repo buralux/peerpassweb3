@@ -31,6 +31,7 @@ const CreateCardSection: React.FC = () => {
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState<'template' | 'details' | 'preview' | 'social'>('template');
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
   
   // Initialize form with default values
   const form = useForm<CreateCardFormData>({
@@ -232,21 +233,43 @@ const CreateCardSection: React.FC = () => {
             {/* Template Selection Step */}
             {currentStep === 'template' && (
               <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Sur mobile, afficher d'abord l'aperçu */}
-                  <div className="md:hidden sticky top-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 shadow-lg mb-6">
-                    <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Live Preview</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">Your card will look like this.</p>
-                    
-                    <div className="w-full max-w-sm mx-auto transform transition-all hover:scale-105">
-                      <BusinessCard card={previewCard} isPreview={true} />
+                {/* Aperçu flottant fixe (toujours visible lors du défilement) */}
+                <div className="fixed bottom-4 right-4 z-50 md:hidden">
+                  <button 
+                    onClick={() => setShowMobilePreview(!showMobilePreview)}
+                    className="w-14 h-14 rounded-full flex items-center justify-center bg-gradient-to-r from-primary to-purple-600 text-white shadow-lg"
+                  >
+                    <span className="material-icons">{showMobilePreview ? 'close' : 'preview'}</span>
+                  </button>
+                </div>
+                
+                {/* Aperçu plein écran sur mobile */}
+                {showMobilePreview && (
+                  <div className="fixed inset-0 bg-gray-900/90 z-50 p-4 md:hidden flex flex-col">
+                    <div className="text-white flex justify-between items-center mb-4">
+                      <h3 className="text-xl font-medium">Live Preview</h3>
+                      <button 
+                        onClick={() => setShowMobilePreview(false)}
+                        className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-800"
+                      >
+                        <span className="material-icons">close</span>
+                      </button>
                     </div>
                     
-                    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
-                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300">Color Scheme: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
+                    <div className="flex-1 flex flex-col items-center justify-center">
+                      <div className="w-full max-w-sm transform transition-all">
+                        <BusinessCard card={previewCard} isPreview={true} />
+                      </div>
+                      
+                      <div className="mt-6 pt-4 border-t border-gray-700 w-full max-w-sm">
+                        <h4 className="font-medium text-sm text-gray-300 mb-2">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
+                        <h4 className="font-medium text-sm text-gray-300">Color Scheme: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
+                      </div>
                     </div>
                   </div>
+                )}
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
                       <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Choose a Template</h3>
@@ -344,7 +367,7 @@ const CreateCardSection: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Aperçu de la carte en temps réel - avec 'position: sticky' pour suivre le défilement */}
+                  {/* Aperçu de la carte en temps réel - avec 'position: sticky' sur desktop uniquement */}
                   <div className="hidden md:block sticky top-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 shadow-lg">
                     <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Live Preview</h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-6">Your card will look like this.</p>

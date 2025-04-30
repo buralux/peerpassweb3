@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 interface OnboardingSectionProps {
   onConnect: () => void;
   onLearnMore: () => void;
+  onDemoMode?: () => void;  // Nouvel ajout pour le mode démo
 }
 
-const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLearnMore }) => {
+const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLearnMore, onDemoMode }) => {
   return (
     <div className="my-6 p-6 bg-white dark:bg-darkSurface rounded-xl card-shadow text-center">
       <h2 className="font-heading font-bold text-2xl mb-3 text-gray-800 dark:text-white">
@@ -21,9 +22,19 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
           onClick={onConnect}
           className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg"
         >
-          <span className="material-icons">add_circle</span>
+          <span className="material-icons">account_balance_wallet</span>
           <span>Connect Wallet</span>
         </Button>
+        
+        {onDemoMode && (
+          <Button 
+            onClick={onDemoMode}
+            className="flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-white font-medium py-3 px-6 rounded-lg"
+          >
+            <span className="material-icons">visibility</span>
+            <span>Mode Démo</span>
+          </Button>
+        )}
         
         <Button 
           onClick={onLearnMore}

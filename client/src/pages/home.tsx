@@ -11,21 +11,94 @@ import DashboardStats from "@/components/DashboardStats";
 import CardSection from "@/components/CardSection";
 import CollectedCardsSection from "@/components/CollectedCardsSection";
 import { BusinessCard } from "@shared/schema";
+import { useToast } from "@/hooks/use-toast";
+
+// Exemples de cartes de visite pour le mode démo
+const DEMO_CARDS: BusinessCard[] = [
+  {
+    id: 1,
+    owner: "0xDemoAddress1",
+    tokenId: "demo-token-1",
+    name: "John Doe",
+    jobTitle: "Product Manager",
+    company: "TechCorp",
+    email: "john@example.com",
+    phone: "+33 6 12 34 56 78",
+    website: "https://johndoe.example.com",
+    bio: "Experienced product manager specializing in SaaS products.",
+    template: "professional",
+    colorScheme: "blue-violet",
+    avatarUrl: null,
+    socialLinks: {},
+    metadata: {},
+    ipfsHash: null,
+    isMinted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 2,
+    owner: "0xDemoAddress1",
+    tokenId: "demo-token-2",
+    name: "Marie Dupont",
+    jobTitle: "UX Designer",
+    company: "DesignStudio",
+    email: "marie@example.com",
+    phone: "+33 6 98 76 54 32",
+    website: "https://mariedesigns.example.com",
+    bio: "Creative UX/UI designer with expertise in mobile applications.",
+    template: "creative",
+    colorScheme: "teal-emerald",
+    avatarUrl: null,
+    socialLinks: {},
+    metadata: {},
+    ipfsHash: null,
+    isMinted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+];
+
+const DEMO_COLLECTED_CARDS: BusinessCard[] = [
+  {
+    id: 3,
+    owner: "0xDemoAddress2",
+    tokenId: "demo-token-3",
+    name: "Pierre Martin",
+    jobTitle: "Blockchain Developer",
+    company: "Web3 Solutions",
+    email: "pierre@example.com",
+    phone: "+33 7 11 22 33 44",
+    website: "https://pierreblockchain.example.com",
+    bio: "Blockchain specialist with experience in Ethereum and BNB Chain.",
+    template: "bold",
+    colorScheme: "amber-red",
+    avatarUrl: null,
+    socialLinks: {},
+    metadata: {},
+    ipfsHash: null,
+    isMinted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+];
 
 const HomePage: React.FC = () => {
   const { wallet, connect, isConnected } = useWallet();
   const [, navigate] = useLocation();
+  const [demoMode, setDemoMode] = useState(false);
+  const { toast } = useToast();
   
   // Fetch user's cards
   const { data: userCards = [], isLoading: isLoadingUserCards } = useQuery<BusinessCard[]>({
     queryKey: wallet?.address ? [`/api/cards/owner/${wallet.address}`] : [],
-    enabled: !!wallet?.address,
+    enabled: !!wallet?.address && !demoMode,
   });
   
   // Fetch collected cards
   const { data: collectedCards = [], isLoading: isLoadingCollectedCards } = useQuery<BusinessCard[]>({
     queryKey: wallet?.address ? [`/api/collected-cards/${wallet.address}`] : [],
-    enabled: !!wallet?.address,
+    enabled: !!wallet?.address && !demoMode,
   });
   
   const handleConnectWallet = async () => {
@@ -34,11 +107,25 @@ const HomePage: React.FC = () => {
     } catch (error) {
       console.log("Error connecting wallet:", error);
       // L'erreur est déjà gérée par le hook useWallet
+      
+      toast({
+        title: "Erreur de connexion",
+        description: "Impossible de se connecter au portefeuille. Essayez le mode démo pour explorer l'application.",
+        variant: "destructive",
+      });
     }
   };
   
   const handleLearnMore = () => {
     window.open("https://www.bnbchain.org/en", "_blank");
+  };
+  
+  const handleEnterDemoMode = () => {
+    setDemoMode(true);
+    toast({
+      title: "Mode Démo Activé",
+      description: "Vous pouvez maintenant explorer l'application avec des données de démonstration.",
+    });
   };
   
   const handleCreateCard = () => {
@@ -49,22 +136,47 @@ const HomePage: React.FC = () => {
     navigate(`/share/${card.id}`);
   };
   
-  if (!isConnected) {
-    return <OnboardingSection onConnect={handleConnectWallet} onLearnMore={handleLearnMore} />;
+  if (!isConnected && !demoMode) {
+    return (
+      <OnboardingSection 
+        onConnect={handleConnectWallet} 
+        onLearnMore={handleLearnMore}
+        onDemoMode={handleEnterDemoMode}
+      />
+    );
   }
+  
+  const displayedCards = demoMode ? DEMO_CARDS : userCards;
+  const displayedCollectedCards = demoMode ? DEMO_COLLECTED_CARDS : collectedCards;
+  const displayAddress = demoMode ? "0xDemo...1234" : (wallet?.address ? formatWalletAddress(wallet.address) : "");
   
   return (
     <>
+      {demoMode && (
+        <div className="bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 mb-4 rounded">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <span className="material-icons">info</span>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm">
+                Vous êtes en mode démonstration. Les données affichées sont fictives.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <DashboardStats
-        cardCount={userCards.length}
-        collectedCount={collectedCards.length}
-        chainName={ACTIVE_CHAIN.chainName}
-        walletAddress={wallet?.address ? formatWalletAddress(wallet.address) : ""}
+        cardCount={displayedCards.length}
+        collectedCount={displayedCollectedCards.length}
+        chainName={demoMode ? "Mode Démo" : ACTIVE_CHAIN.chainName}
+        walletAddress={displayAddress}
       />
       
       <CardSection
         title="Your Cards"
-        cards={userCards}
+        cards={displayedCards}
         showCreateButton={true}
         onCreateCard={handleCreateCard}
         onShare={handleShareCard}
@@ -72,7 +184,7 @@ const HomePage: React.FC = () => {
       />
       
       <CollectedCardsSection
-        cards={collectedCards}
+        cards={displayedCollectedCards}
       />
     </>
   );

@@ -8,6 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import CardPreview from "./CardPreview";
 import BusinessCard from "./BusinessCard";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
@@ -240,23 +241,13 @@ const CreateCardSection: React.FC = () => {
             {/* Template Selection Step */}
             {currentStep === 'template' && (
               <div className="space-y-6">
-                {/* Bandeau de prévisualisation au-dessus du contenu sur mobile */}
-                <div className="md:hidden mb-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 shadow-md">
-                  <h3 className="font-medium text-lg text-gray-800 dark:text-white mb-2 flex items-center">
-                    <span className="material-icons mr-2 text-primary">preview</span>
-                    Card Preview
-                  </h3>
-                  
-                  <div className="w-full max-w-sm mx-auto">
-                    <BusinessCard card={{...previewCard, template: selectedTemplate, colorScheme: selectedColorScheme}} key={`${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`} isPreview={true} />
-                  </div>
-                  
-                  <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                    <div>
-                      <h4 className="font-medium text-xs text-gray-700 dark:text-gray-300">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
-                      <h4 className="font-medium text-xs text-gray-700 dark:text-gray-300">Color: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
-                    </div>
-                  </div>
+                {/* Utiliser le composant CardPreview qui gère sa propre mise à jour */}
+                <div className="md:hidden mb-4">
+                  <CardPreview 
+                    card={previewCard}
+                    templateId={selectedTemplate}
+                    colorSchemeId={selectedColorScheme}
+                  />
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -358,18 +349,13 @@ const CreateCardSection: React.FC = () => {
                   </div>
                   
                   {/* Aperçu de la carte en temps réel - avec 'position: sticky' sur desktop uniquement */}
-                  <div className="hidden md:block sticky top-4 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 shadow-lg">
-                    <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Live Preview</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">Your card will look like this.</p>
-                    
-                    <div className="w-full max-w-sm mx-auto transform transition-all hover:scale-105">
-                      <BusinessCard card={{...previewCard, template: selectedTemplate, colorScheme: selectedColorScheme}} key={`${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`} isPreview={true} />
-                    </div>
-                    
-                    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
-                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300">Color Scheme: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
-                    </div>
+                  <div className="hidden md:block sticky top-4">
+                    <CardPreview 
+                      card={previewCard}
+                      templateId={selectedTemplate}
+                      colorSchemeId={selectedColorScheme}
+                      className="h-full"
+                    />
                   </div>
                 </div>
                 

@@ -22,7 +22,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
   
   return (
     <header className="bg-white dark:bg-darkSurface shadow-sm sticky top-0 z-50">
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-3">
         <div className="flex items-center">
           <button className="md:hidden mr-4" aria-label="Open menu">
             <span className="material-icons text-gray-700 dark:text-gray-300">menu</span>
@@ -32,7 +32,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
               <img 
                 src={peerpassLogo} 
                 alt="PeerPass Logo" 
-                className="h-8 mr-2" 
+                className="h-12 mr-2 filter drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 ease-in-out" 
               />
             </div>
           </Link>

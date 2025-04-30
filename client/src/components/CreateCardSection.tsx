@@ -200,7 +200,7 @@ const CreateCardSection: React.FC = () => {
         <div className="mb-8">
           <div className="flex justify-between items-center">
             {['template', 'details', 'social', 'preview'].map((step, index) => (
-              <React.Fragment key={step}>
+              <div key={step}>
                 {/* Step circle */}
                 <div 
                   className={`flex flex-col items-center cursor-pointer`}
@@ -231,7 +231,7 @@ const CreateCardSection: React.FC = () => {
                       : 'bg-gray-200 dark:bg-gray-700'
                   }`} />
                 )}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>

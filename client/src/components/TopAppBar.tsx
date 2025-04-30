@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { Link } from "wouter";
 import { formatWalletAddress } from "@/lib/utils";
+import peerpassLogo from "../assets/peerpass-logo.png";
 
 interface TopAppBarProps {
   isConnected: boolean;
@@ -29,7 +30,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
           <Link href="/">
             <div className="flex items-center cursor-pointer">
               <img 
-                src="./images/peerpass-logo.png" 
+                src={peerpassLogo} 
                 alt="PeerPass Logo" 
                 className="h-8 mr-2" 
               />

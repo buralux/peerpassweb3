@@ -70,10 +70,10 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
                 <text 
                   x="0" 
                   y="0" 
-                  font-family="Arial" 
-                  font-size="24" 
+                  fontFamily="Arial" 
+                  fontSize="24" 
                   fill="#263238" 
-                  text-anchor="middle"
+                  textAnchor="middle"
                 >
                   Web3 Business Cards
                 </text>

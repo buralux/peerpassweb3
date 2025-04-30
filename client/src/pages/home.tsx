@@ -29,7 +29,12 @@ const HomePage: React.FC = () => {
   });
   
   const handleConnectWallet = async () => {
-    await connect("injected");
+    try {
+      await connect("injected");
+    } catch (error) {
+      console.log("Error connecting wallet:", error);
+      // L'erreur est déjà gérée par le hook useWallet
+    }
   };
   
   const handleLearnMore = () => {

@@ -27,9 +27,13 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
             <span className="material-icons text-gray-700 dark:text-gray-300">menu</span>
           </button>
           <Link href="/">
-            <h1 className="font-heading font-bold text-primary dark:text-secondary text-xl cursor-pointer">
-              PeerPass
-            </h1>
+            <div className="flex items-center cursor-pointer">
+              <img 
+                src="./images/peerpass-logo.png" 
+                alt="PeerPass Logo" 
+                className="h-8 mr-2" 
+              />
+            </div>
           </Link>
         </div>
         

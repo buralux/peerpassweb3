@@ -220,98 +220,117 @@ const CreateCardSection: React.FC = () => {
             {/* Template Selection Step */}
             {currentStep === 'template' && (
               <div className="space-y-6">
-                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Choose a Template</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">Select a template style for your NFT business card.</p>
-                  
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {CARD_TEMPLATES.map((template) => (
-                      <div 
-                        key={template.id}
-                        className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 group ${
-                          selectedTemplate === template.id 
-                            ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
-                            : 'ring-1 ring-gray-200 dark:ring-gray-700'
-                        }`}
-                        onClick={() => handleTemplateChange(template.id)}
-                      >
-                        {/* Template preview */}
-                        <div className={`aspect-[3/4] bg-gradient-to-br ${
-                          COLOR_SCHEMES.find(c => c.id === (
-                            template.id === "professional" ? "blue-violet" :
-                            template.id === "creative" ? "teal-emerald" :
-                            template.id === "bold" ? "amber-red" :
-                            template.id === "modern" ? "purple-pink" :
-                            "gray-dark"
-                          ))?.colors.join(" ")
-                        }`}>
-                          <div className="w-full h-full flex flex-col justify-between p-3">
-                            <div className="flex items-center bg-white/20 rounded-lg p-1">
-                              <div className="w-6 h-6 rounded-full bg-white/30 mr-2"></div>
-                              <div className="flex-1">
-                                <div className="h-2 w-12 bg-white/30 rounded-full"></div>
-                                <div className="h-2 w-8 bg-white/30 rounded-full mt-1"></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Choose a Template</h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6">Select a template style for your NFT business card.</p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        {CARD_TEMPLATES.map((template) => (
+                          <div 
+                            key={template.id}
+                            className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 group ${
+                              selectedTemplate === template.id 
+                                ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
+                                : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                            }`}
+                            onClick={() => handleTemplateChange(template.id)}
+                          >
+                            {/* Template preview */}
+                            <div className={`aspect-[3/4] bg-gradient-to-br ${
+                              COLOR_SCHEMES.find(c => c.id === (
+                                template.id === "professional" ? "blue-violet" :
+                                template.id === "creative" ? "teal-emerald" :
+                                template.id === "bold" ? "amber-red" :
+                                template.id === "modern" ? "purple-pink" :
+                                "gray-dark"
+                              ))?.colors.join(" ")
+                            }`}>
+                              <div className="w-full h-full flex flex-col justify-between p-3">
+                                <div className="flex items-center bg-white/20 rounded-lg p-1">
+                                  <div className="w-6 h-6 rounded-full bg-white/30 mr-2"></div>
+                                  <div className="flex-1">
+                                    <div className="h-2 w-12 bg-white/30 rounded-full"></div>
+                                    <div className="h-2 w-8 bg-white/30 rounded-full mt-1"></div>
+                                  </div>
+                                </div>
+                                
+                                <div className="space-y-1">
+                                  <div className="h-2 w-full bg-white/20 rounded-full"></div>
+                                  <div className="h-2 w-3/4 bg-white/20 rounded-full"></div>
+                                  <div className="flex justify-between mt-2">
+                                    <div className="h-4 w-4 rounded-full bg-white/20"></div>
+                                    <div className="h-4 w-4 rounded-full bg-white/20"></div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             
-                            <div className="space-y-1">
-                              <div className="h-2 w-full bg-white/20 rounded-full"></div>
-                              <div className="h-2 w-3/4 bg-white/20 rounded-full"></div>
-                              <div className="flex justify-between mt-2">
-                                <div className="h-4 w-4 rounded-full bg-white/20"></div>
-                                <div className="h-4 w-4 rounded-full bg-white/20"></div>
+                            {/* Selected overlay */}
+                            {selectedTemplate === template.id && (
+                              <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                                <div className="bg-white rounded-full p-1">
+                                  <span className="material-icons text-primary">check</span>
+                                </div>
                               </div>
+                            )}
+                            
+                            {/* Title */}
+                            <div className="p-2 bg-white dark:bg-gray-800 text-center">
+                              <p className="font-medium text-sm text-gray-800 dark:text-white">{template.name}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">{template.description}</p>
                             </div>
                           </div>
-                        </div>
-                        
-                        {/* Selected overlay */}
-                        {selectedTemplate === template.id && (
-                          <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
-                            <div className="bg-white rounded-full p-1">
-                              <span className="material-icons text-primary">check</span>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Title */}
-                        <div className="p-2 bg-white dark:bg-gray-800 text-center">
-                          <p className="font-medium text-sm text-gray-800 dark:text-white">{template.name}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">{template.description}</p>
-                        </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                    
+                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 mt-6">
+                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Pick a Color Scheme</h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6">Set the color palette for your NFT business card.</p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        {COLOR_SCHEMES.map((scheme) => (
+                          <button
+                            key={scheme.id}
+                            type="button"
+                            onClick={() => handleColorSchemeChange(scheme.id)}
+                            className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 ${
+                              selectedColorScheme === scheme.id 
+                                ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
+                                : 'ring-1 ring-gray-200 dark:ring-gray-700'
+                            }`}
+                          >
+                            <div className={`h-24 bg-gradient-to-br ${scheme.colors.join(" ")}`}></div>
+                            <div className="p-2 bg-white dark:bg-gray-800 text-center">
+                              <p className="font-medium text-sm text-gray-800 dark:text-white">{scheme.name}</p>
+                            </div>
+                            
+                            {selectedColorScheme === scheme.id && (
+                              <div className="absolute top-2 right-2 bg-white rounded-full p-1">
+                                <span className="material-icons text-primary text-sm">check</span>
+                              </div>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Pick a Color Scheme</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">Set the color palette for your NFT business card.</p>
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {COLOR_SCHEMES.map((scheme) => (
-                      <button
-                        key={scheme.id}
-                        type="button"
-                        onClick={() => handleColorSchemeChange(scheme.id)}
-                        className={`relative rounded-xl overflow-hidden transition-all cursor-pointer transform hover:scale-105 ${
-                          selectedColorScheme === scheme.id 
-                            ? 'ring-2 ring-primary ring-offset-2 dark:ring-offset-gray-800' 
-                            : 'ring-1 ring-gray-200 dark:ring-gray-700'
-                        }`}
-                      >
-                        <div className={`h-24 bg-gradient-to-br ${scheme.colors.join(" ")}`}></div>
-                        <div className="p-2 bg-white dark:bg-gray-800 text-center">
-                          <p className="font-medium text-sm text-gray-800 dark:text-white">{scheme.name}</p>
-                        </div>
-                        
-                        {selectedColorScheme === scheme.id && (
-                          <div className="absolute top-2 right-2 bg-white rounded-full p-1">
-                            <span className="material-icons text-primary text-sm">check</span>
-                          </div>
-                        )}
-                      </button>
-                    ))}
+                  {/* Aperçu de la carte en temps réel */}
+                  <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
+                    <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Live Preview</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">Your card will look like this.</p>
+                    
+                    <div className="w-full max-w-sm mx-auto transform transition-all hover:scale-105">
+                      <BusinessCard card={previewCard} isPreview={true} />
+                    </div>
+                    
+                    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">Template: <span className="text-primary">{CARD_TEMPLATES.find(t => t.id === selectedTemplate)?.name}</span></h4>
+                      <h4 className="font-medium text-sm text-gray-700 dark:text-gray-300">Color Scheme: <span className="text-primary">{COLOR_SCHEMES.find(c => c.id === selectedColorScheme)?.name}</span></h4>
+                    </div>
                   </div>
                 </div>
                 

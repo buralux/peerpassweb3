@@ -724,7 +724,12 @@ const CreateCardSection: React.FC = () => {
                   <p className="text-gray-600 dark:text-gray-400 mb-6">This is how your NFT business card will look.</p>
                   
                   <div className="mx-auto max-w-sm">
-                    <BusinessCard card={previewCard} isPreview={true} />
+                    <CardPreview 
+                      card={previewCard}
+                      templateId={selectedTemplate}
+                      colorSchemeId={selectedColorScheme}
+                      className="h-full"
+                    />
                   </div>
                 </div>
                 

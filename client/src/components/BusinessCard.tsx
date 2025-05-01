@@ -40,11 +40,11 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
       
       {/* Conteneur de carte avec aspect ratio 1.8/1 */}
       <div className="business-card">
-        
-        {/* FRONT SIDE - Visible when showBack is false */}
-        {!showBack && (
+        {/* Flipper container */}
+        <div className={`card-flipper ${showBack ? 'is-flipped' : ''}`}>
+          {/* FRONT SIDE */}
           <div 
-            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-front ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            className={`card-front absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
             onClick={flipCard}
           >
             {isOmariTemplate ? (
@@ -141,12 +141,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
               <span>{t('cards.tapToFlip')}</span>
             </div>
           </div>
-        )}
-        
-        {/* BACK SIDE - Visible when showBack is true */}
-        {showBack && (
+          
+          {/* BACK SIDE */}
           <div 
-            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-back ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            className={`card-back absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
             onClick={flipCard}
           >
             {/* Company header */}
@@ -221,7 +219,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
               <span>{t('cards.tapToFlip')}</span>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

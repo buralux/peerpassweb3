@@ -3,35 +3,20 @@
 @tailwind utilities;
 
 /* Styles pour l'effet de carte recto-verso */
-.perspective-1000 {
-  perspective: 1000px;
+/* Animation de flip pour la carte */
+@keyframes cardFlipIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.backface-hidden {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: rotateY(0deg);
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.rotate-y-0 {
-  transform: rotateY(0deg);
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
-/* Explicitly set z-index for card sides */
-.card-front {
-  z-index: 2;
-}
-
-.card-back {
-  z-index: 1;
+.card-flip-animation {
+  animation: cardFlipIn 0.3s ease-out;
 }
 
 :root {

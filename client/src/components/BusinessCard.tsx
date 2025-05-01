@@ -5,7 +5,6 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DEFAULT_AVATAR_URL } from "@/lib/constants";
 import { QRCodeSVG } from "qrcode.react";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
 
 interface BusinessCardProps {
   card: BusinessCardType;
@@ -34,24 +33,22 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     setShowBack(!showBack);
   };
   
+  // NOUVEAU: Simplification de l'approche
   return (
-    <div className="relative group mb-6 perspective-1000">
+    <div className="relative group mb-6">
       {/* Glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       
-      <div className="relative w-full h-[240px]">
-        {/* Card Container with 3D effect */}
-        <div 
-          className={`relative bg-white dark:bg-gray-900 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 w-full h-full transition-all duration-700 ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`} 
-          style={{ 
-            aspectRatio: "1.8 / 1",
-            transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)",
-            transformStyle: "preserve-3d"
-          }}
-          onClick={flipCard}
-        >
-          {/* FRONT SIDE OF CARD */}
-          <div className="absolute w-full h-full card-front" style={{ backfaceVisibility: "hidden" }}>
+      {/* Conteneur de carte avec aspect ratio 1.8/1 */}
+      <div className="relative w-full" style={{ height: "240px" }}>
+        
+        {/* FRONT SIDE - Visible when showBack is false */}
+        {!showBack && (
+          <div 
+            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-flip-animation ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            style={{ aspectRatio: "1.8 / 1" }}
+            onClick={flipCard}
+          >
             {isOmariTemplate ? (
               /* Omari Construction Card - Dark/Gold Theme */
               <div className="flex h-full bg-gray-900 text-white overflow-hidden rounded-xl">
@@ -139,15 +136,24 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                 )}
               </div>
             )}
-          </div>
-        
-          {/* BACK SIDE OF CARD */}
-          <div className="absolute w-full h-full card-back" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-            {/* Background de la carte */}
-            <div className={`bg-white dark:bg-gray-900 absolute inset-0 w-full h-full rounded-2xl`}></div>
             
+            {/* Flip indicator */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
+              <span className="material-icons text-xs mr-1">touch_app</span>
+              <span>{t('cards.tapToFlip')}</span>
+            </div>
+          </div>
+        )}
+        
+        {/* BACK SIDE - Visible when showBack is true */}
+        {showBack && (
+          <div 
+            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-flip-animation ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            style={{ aspectRatio: "1.8 / 1" }}
+            onClick={flipCard}
+          >
             {/* Company header */}
-            <div className={`${isOmariTemplate ? 'bg-amber-700' : getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center relative rounded-t-2xl`}>
+            <div className={`${isOmariTemplate ? 'bg-amber-700' : getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center relative rounded-t-xl`}>
               <h2 className="text-white font-bold text-lg">
                 {isOmariTemplate ? "OMARI CONSTRUCTION" : (card.company || "PeerPass")}
               </h2>
@@ -211,16 +217,14 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                 <span className="material-icons text-xs">share</span>
               </button>
             )}
+            
+            {/* Flip indicator */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
+              <span className="material-icons text-xs mr-1">touch_app</span>
+              <span>{t('cards.tapToFlip')}</span>
+            </div>
           </div>
-        </div>
-        
-        {/* Flip indicator centré et plus visible */}
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
-          <span className="material-icons text-xs mr-1">touch_app</span>
-          <span>{t('cards.tapToFlip')}</span>
-        </div>
-        
-        {/* Details button - SUPPRIMÉ */}
+        )}
       </div>
     </div>
   );

@@ -33,20 +33,18 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     setShowBack(!showBack);
   };
   
-  // NOUVEAU: Simplification de l'approche
   return (
     <div className="relative group mb-6">
       {/* Glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       
       {/* Conteneur de carte avec aspect ratio 1.8/1 */}
-      <div className="relative w-full" style={{ height: "240px" }}>
+      <div className="business-card">
         
         {/* FRONT SIDE - Visible when showBack is false */}
         {!showBack && (
           <div 
-            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-flip-animation ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
-            style={{ aspectRatio: "1.8 / 1" }}
+            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-front ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
             onClick={flipCard}
           >
             {isOmariTemplate ? (
@@ -148,8 +146,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         {/* BACK SIDE - Visible when showBack is true */}
         {showBack && (
           <div 
-            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-flip-animation ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
-            style={{ aspectRatio: "1.8 / 1" }}
+            className={`absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 card-back ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
             onClick={flipCard}
           >
             {/* Company header */}

@@ -4,19 +4,44 @@
 
 /* Styles pour l'effet de carte recto-verso */
 /* Animation de flip pour la carte */
-@keyframes cardFlipIn {
+@keyframes cardFlipFront {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: rotateY(180deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: rotateY(0deg);
   }
 }
 
-.card-flip-animation {
-  animation: cardFlipIn 0.3s ease-out;
+@keyframes cardFlipBack {
+  0% {
+    opacity: 0;
+    transform: rotateY(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+.card-front {
+  animation: cardFlipFront 0.4s ease-out;
+  backface-visibility: hidden;
+}
+
+.card-back {
+  animation: cardFlipBack 0.4s ease-out;
+  backface-visibility: hidden;
+}
+
+/* Styles pour la carte business rectangulaire */
+.business-card {
+  width: 100%;
+  aspect-ratio: 1.8 / 1;
+  perspective: 1000px;
+  position: relative;
 }
 
 :root {

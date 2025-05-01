@@ -40,7 +40,7 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
       {cards.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <div key={card.id} className="block cursor-pointer">
+            <div key={card.id} className="block">
               <BusinessCard 
                 card={card}
                 onShare={onContact ? () => onContact(card) : undefined}

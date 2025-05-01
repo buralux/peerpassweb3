@@ -48,14 +48,7 @@ const CardSection: React.FC<CardSectionProps> = ({
                 card={card} 
                 onShare={onShare ? () => onShare(card) : undefined}
               />
-              <div className="absolute bottom-4 left-4 z-30" data-no-flip="true">
-                <Link href={`/card/${card.id}`}>
-                  <Button variant="primary" size="sm" className="text-xs flex items-center gap-1 bg-primary text-white rounded-full px-3 py-1 h-auto">
-                    <span className="material-icons text-xs">info</span>
-                    {t('cards.viewDetails')}
-                  </Button>
-                </Link>
-              </div>
+              {/* Bouton Details supprimé car les informations sont visibles avec le flip */}
             </div>
           ))}
         </div>

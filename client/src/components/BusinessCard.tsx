@@ -210,9 +210,9 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           </div>
         </div>
         
-        {/* Flip indicator */}
-        <div className="absolute right-2 bottom-2 text-gray-400 dark:text-gray-500 text-[10px] flex items-center opacity-70 hover:opacity-100 z-10 bg-black/10 dark:bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full transition-opacity">
-          <span className="material-icons text-xs mr-0.5">360</span>
+        {/* Flip indicator centré et plus visible */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
+          <span className="material-icons text-xs mr-1">touch_app</span>
           <span>{t('cards.tapToFlip')}</span>
         </div>
         

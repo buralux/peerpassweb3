@@ -33,7 +33,7 @@ const CreateCardSection: React.FC = () => {
   const { t } = useTranslation();
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState<'template' | 'details' | 'preview' | 'social'>('template');
+  const [currentStep, setCurrentStep] = useState<'template' | 'details' | 'social' | 'customize' | 'preview'>('template');
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   
   // Initialize form with default values
@@ -163,6 +163,7 @@ const CreateCardSection: React.FC = () => {
     avatarUrl: avatarUrl || "",
     socialLinks: socialLinks || {},
     metadata: {},
+    customization: {}, // Empty customization object for now
     ipfsHash: null,
     isMinted: false,
     createdAt: new Date(),
@@ -173,12 +174,14 @@ const CreateCardSection: React.FC = () => {
   const goToNextStep = () => {
     if (currentStep === 'template') setCurrentStep('details');
     else if (currentStep === 'details') setCurrentStep('social');
-    else if (currentStep === 'social') setCurrentStep('preview');
+    else if (currentStep === 'social') setCurrentStep('customize');
+    else if (currentStep === 'customize') setCurrentStep('preview');
   };
 
   // Navigate to previous step
   const goToPrevStep = () => {
-    if (currentStep === 'preview') setCurrentStep('social');
+    if (currentStep === 'preview') setCurrentStep('customize');
+    else if (currentStep === 'customize') setCurrentStep('social');
     else if (currentStep === 'social') setCurrentStep('details');
     else if (currentStep === 'details') setCurrentStep('template');
   };

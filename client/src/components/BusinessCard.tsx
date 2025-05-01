@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getGradientClass } from "@/lib/utils";
-import { BusinessCard as BusinessCardType } from "@shared/schema";
+import { BusinessCard as BusinessCardType, CardCustomization } from "@shared/schema";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DEFAULT_AVATAR_URL } from "@/lib/constants";
 import { QRCodeSVG } from "qrcode.react";

@@ -35,6 +35,7 @@ const DEMO_CARDS: BusinessCard[] = [
       linkedin: "https://linkedin.com/in/azizlaghzaoui"
     },
     metadata: {},
+    customization: {},
     ipfsHash: null,
     isMinted: true,
     createdAt: new Date(),
@@ -59,6 +60,7 @@ const DEMO_CARDS: BusinessCard[] = [
       twitter: "https://twitter.com/alihamayet"
     },
     metadata: {},
+    customization: {},
     ipfsHash: null,
     isMinted: true,
     createdAt: new Date(),
@@ -83,6 +85,10 @@ const DEMO_CARDS: BusinessCard[] = [
       twitter: "https://twitter.com/omari_construction"
     },
     metadata: {},
+    customization: {
+      fontFamily: 'Poppins',
+      fontWeight: 'bold'
+    },
     ipfsHash: null,
     isMinted: true,
     createdAt: new Date(),

@@ -101,8 +101,12 @@ export const colorSchemes = [
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 
-export type BusinessCard = typeof businessCards.$inferSelect;
-export type InsertBusinessCard = z.infer<typeof insertBusinessCardSchema>;
+export type BusinessCard = typeof businessCards.$inferSelect & {
+  customization: CardCustomization;
+};
+export type InsertBusinessCard = z.infer<typeof insertBusinessCardSchema> & {
+  customization?: CardCustomization;
+};
 
 export type CollectedCard = typeof collectedCards.$inferSelect;
 export type InsertCollectedCard = z.infer<typeof insertCollectedCardSchema>;
@@ -129,44 +133,9 @@ export const fontFamilies = [
 
 export type FontFamily = typeof fontFamilies[number];
 
-// Advanced customization types
-export interface CardCustomization {
-  // Typography
-  fontFamily?: FontFamily;
-  nameFontSize?: string;
-  titleFontSize?: string;
-  textFontSize?: string;
-  fontWeight?: 'normal' | 'medium' | 'semibold' | 'bold';
-  
-  // Layout 
-  avatarSize?: 'small' | 'medium' | 'large';
-  avatarBorderWidth?: number;
-  contentAlignment?: 'left' | 'center' | 'right';
-  
-  // Effects
-  opacity?: number;  // 0-100
-  blur?: number;     // 0-10
-  shadowIntensity?: 'none' | 'light' | 'medium' | 'strong';
-  glowEffect?: boolean;
-  
-  // Shapes and borders
-  borderRadius?: number; // 0-20
-  borderWidth?: number;  // 0-5
-  borderColor?: string;  // CSS color
-  
-  // Custom colors
-  primaryColor?: string;
-  secondaryColor?: string;
-  textColor?: string;
-  backgroundColor?: string;
-  
-  // Custom positioning
-  namePosition?: { x: number, y: number };
-  titlePosition?: { x: number, y: number };
-  avatarPosition?: { x: number, y: number };
-}
+// We will use the Partial<> version below
 
-// Not requiring customization to be mandatory
+// Card customization options
 export type CardCustomization = Partial<{
   // Typography
   fontFamily: FontFamily;

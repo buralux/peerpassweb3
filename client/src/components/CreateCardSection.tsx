@@ -367,7 +367,7 @@ const CreateCardSection: React.FC = () => {
                     onClick={goToNextStep}
                     className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg"
                   >
-                    Next Step
+                    {t('common.nextStep')}
                     <span className="material-icons ml-2">arrow_forward</span>
                   </Button>
                 </div>

@@ -686,7 +686,7 @@ const CreateCardSection: React.FC = () => {
                           {isConnected && (
                             <div className="mt-2 text-xs text-green-600 dark:text-green-400 flex items-center">
                               <span className="material-icons text-xs mr-1">check_circle</span>
-                              <span>Added</span>
+                              <span>{t('create.socialNetworks.added')}</span>
                             </div>
                           )}
                         </div>
@@ -722,8 +722,8 @@ const CreateCardSection: React.FC = () => {
             {currentStep === 'preview' && (
               <div className="space-y-6">
                 <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Preview Your Card</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">This is how your NFT business card will look.</p>
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.preview.title')}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.preview.subtitle')}</p>
                   
                   <div className="mx-auto max-w-sm">
                     <CardPreview 
@@ -738,20 +738,20 @@ const CreateCardSection: React.FC = () => {
                 <div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
                   <h3 className="font-medium text-xl text-primary mb-4 flex items-center">
                     <span className="material-icons mr-2">generating_tokens</span>
-                    Ready to Mint
+                    {t('create.nftOnChain')}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Your NFT business card will be minted on the BNB Chain Testnet. It will be stored permanently on the blockchain and can be shared with your professional contacts.
+                    {t('create.blockchainInfo')}
                   </p>
                   
                   <div className="flex flex-col md:flex-row gap-4 mb-4">
                     <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                       <div className="flex items-center text-gray-700 dark:text-gray-300">
                         <span className="material-icons text-primary mr-2">token</span>
-                        <span className="font-medium">NFT on BNB Chain</span>
+                        <span className="font-medium">{t('create.nftOnChain')}</span>
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        Your card will be minted as a unique NFT token
+                        {t('create.uniqueToken')}
                       </p>
                     </div>
                     

@@ -1,6 +1,35 @@
+# Dépendances
 node_modules
+.pnp
+.pnp.js
+
+# Environnement de production
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers de compilation
 dist
+dist-ssr
+build
+*.local
+
+# Éditeurs
+.idea
 .DS_Store
-server/public
-vite.config.ts.*
-*.tar.gz
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vscode
+
+# Divers
+.vercel

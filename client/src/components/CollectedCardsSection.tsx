@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BusinessCard as BusinessCardType } from "@shared/schema";
 import BusinessCard from "./BusinessCard";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 
 interface CollectedCardsSectionProps {
   cards: BusinessCardType[];
@@ -15,11 +16,13 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
   onFilter,
   onContact,
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-heading font-bold text-xl text-gray-800 dark:text-white">
-          Collected Cards
+          {t('cards.collectedCards')}
         </h2>
         
         {onFilter && (
@@ -29,7 +32,7 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
             onClick={onFilter}
           >
             <span className="material-icons text-sm mr-1">filter_list</span>
-            Filter
+            {t('cards.filterBy')}
           </Button>
         )}
       </div>
@@ -50,14 +53,14 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
       ) : (
         <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6 text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            You haven't collected any cards yet. 
-            Use the scan button to collect cards from other users.
+            {t('cards.emptyCollectedState')} 
+            {t('scan.instructions')}
           </p>
           
           <Link href="/scan">
             <Button className="mt-4 bg-primary hover:bg-primary/90 text-white">
               <span className="material-icons mr-2">qr_code_scanner</span>
-              Scan QR Code
+              {t('scan.title')}
             </Button>
           </Link>
         </div>

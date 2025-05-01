@@ -154,6 +154,7 @@
   },
   "errors": {
     "walletNotConnected": "Wallet not connected",
+    "connectionError": "Unable to connect to wallet. Try demo mode to explore the application.",
     "missingInfo": "Missing information",
     "invalidAddress": "Invalid wallet address",
     "networkError": "Network error",

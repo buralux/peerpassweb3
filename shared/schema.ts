@@ -120,5 +120,5 @@ export const createBusinessCardSchema = insertBusinessCardSchema.extend({
   email: z.string().email("Invalid email address").optional().or(z.literal("")),
   phone: z.string().optional().or(z.literal("")),
   avatarUrl: z.string().url().optional().or(z.literal("")),
-  socialLinks: z.record(z.string(), z.string().url()).optional().or(z.literal({})),
+  socialLinks: z.record(z.string(), z.string().url()).optional().or(z.literal("")).transform(val => val === "" ? {} : val),
 });

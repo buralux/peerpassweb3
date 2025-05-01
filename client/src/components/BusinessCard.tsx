@@ -179,7 +179,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
               {/* Social Links as icons in a row */}
               <div className="flex space-x-1.5 mt-1 pt-1">
                 {card.socialLinks && typeof card.socialLinks === 'object' && 
-                  Object.entries(card.socialLinks as Record<string, string>).map(([platform, url]) => {
+                  Object.entries(card.socialLinks as Record<string, string>)
+                  .map(([platform, url]: [string, string]) => {
                     // Déterminer l'icône à afficher en fonction de la plateforme
                     let iconName = "link";
                     if (platform === "linkedin") iconName = "linkedin";

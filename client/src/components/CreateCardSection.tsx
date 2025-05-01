@@ -378,8 +378,8 @@ const CreateCardSection: React.FC = () => {
             {currentStep === 'details' && (
               <div className="space-y-6">
                 <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Personal Information</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">Enter your basic professional details.</p>
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.personalInfo.title')}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.personalInfo.subtitle')}</p>
                   
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -388,7 +388,7 @@ const CreateCardSection: React.FC = () => {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-gray-700 dark:text-gray-300">Full Name</FormLabel>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.fullName')}</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -411,7 +411,7 @@ const CreateCardSection: React.FC = () => {
                         name="jobTitle"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-gray-700 dark:text-gray-300">Job Title</FormLabel>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.jobTitle')}</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">

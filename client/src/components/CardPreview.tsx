@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { BusinessCard as BusinessCardType } from "@shared/schema";
 import BusinessCard from "./BusinessCard";
 import { CARD_TEMPLATES, COLOR_SCHEMES } from "@/lib/constants";
@@ -24,7 +24,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({
   // État interne pour force un rafraîchissement à chaque changement de props
   const [key, setKey] = useState(Date.now());
   
-  // Met à jour la clé à chaque changement de template ou de couleur
+  // Mettre à jour la clé à chaque changement de template, couleur, ou données de carte
   useEffect(() => {
     setKey(Date.now());
     
@@ -34,14 +34,31 @@ const CardPreview: React.FC<CardPreviewProps> = ({
         colorScheme: colorSchemeId
       });
     }
-  }, [templateId, colorSchemeId]);
+  }, [
+    templateId, 
+    colorSchemeId, 
+    card.name,
+    card.jobTitle,
+    card.company,
+    card.bio,
+    card.email,
+    card.phone,
+    card.website,
+    card.avatarUrl,
+    // Convertir l'objet en chaîne pour la comparaison
+    JSON.stringify(card.socialLinks)
+  ]);
   
-  // Crée une carte avec les valeurs de template et couleur actuelles
-  const previewCard = {
+  // Utiliser useMemo pour éviter de recréer l'objet à chaque rendu sauf si nécessaire
+  const previewCard = useMemo(() => ({
     ...card,
     template: templateId,
     colorScheme: colorSchemeId
-  };
+  }), [
+    card,
+    templateId, 
+    colorSchemeId
+  ]);
   
   return (
     <div className={`bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 shadow-md ${className}`}>

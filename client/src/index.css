@@ -7,8 +7,13 @@
   perspective: 1000px;
 }
 
-.backface-visibility-hidden {
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
 }
 
 .rotate-y-0 {
@@ -17,6 +22,15 @@
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+}
+
+/* Explicitly set z-index for card sides */
+.card-front {
+  z-index: 2;
+}
+
+.card-back {
+  z-index: 1;
 }
 
 :root {

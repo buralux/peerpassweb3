@@ -40,14 +40,12 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
       {cards.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <Link key={card.id} href={`/card/${card.id}`}>
-              <a className="block cursor-pointer">
-                <BusinessCard 
-                  card={card}
-                  onShare={onContact ? () => onContact(card) : undefined}
-                />
-              </a>
-            </Link>
+            <div key={card.id} className="block cursor-pointer">
+              <BusinessCard 
+                card={card}
+                onShare={onContact ? () => onContact(card) : undefined}
+              />
+            </div>
           ))}
         </div>
       ) : (

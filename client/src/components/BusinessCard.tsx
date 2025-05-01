@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { getGradientClass, getMutedTextColor } from "@/lib/utils";
 import { BusinessCard as BusinessCardType } from "@shared/schema";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -6,6 +6,7 @@ import { formatWalletAddress } from "@/lib/utils";
 import { DEFAULT_AVATAR_URL } from "@/lib/constants";
 import { QRCodeSVG } from "qrcode.react";
 import { useTranslation } from "react-i18next";
+import { Link } from "wouter";
 
 interface BusinessCardProps {
   card: BusinessCardType;
@@ -30,18 +31,28 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   // Check if this is the Omari template
   const isOmariTemplate = card.template === "omari";
   
-  const toggleCardSide = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Référence vers le div de la carte
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Fonction spécifique pour retourner la carte
+  const flipCard = () => {
+    setShowBack(!showBack);
+  };
+  
+  // Gestionnaire d'événement principal pour les clics sur la carte
+  const handleCardClick = (e: React.MouseEvent) => {
     // Empêcher la navigation et autres comportements par défaut
     e.preventDefault();
     e.stopPropagation();
     
-    // Ne pas retourner la carte si on clique sur le bouton de détails
+    // Ne pas retourner la carte si on clique sur le bouton ou le lien
     const target = e.target as HTMLElement;
-    const isButtonClick = target.closest('button') !== null;
-    
-    if (!isButtonClick) {
-      setShowBack(!showBack);
+    if (target.closest('button') || target.closest('a') || target.closest('div[data-no-flip="true"]')) {
+      return;
     }
+    
+    // Sinon, retourner la carte
+    flipCard();
   };
   
   return (
@@ -58,7 +69,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)",
             aspectRatio: "1.8 / 1" 
           }}
-          onClick={toggleCardSide}
+          ref={cardRef}
+          onClick={handleCardClick}
         >
           {/* FRONT SIDE OF CARD */}
           <div className="absolute w-full h-full backface-hidden" style={{ backfaceVisibility: "hidden" }}>
@@ -229,16 +241,16 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         
         {/* Details button */}
         {!isPreview && (
-          <button 
-            className="absolute bottom-2 left-2 bg-primary text-white text-xs px-3 py-1 rounded-full flex items-center z-20"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.location.href = `/card/${card.id}`;
-            }}
-          >
-            <span className="material-icons text-xs mr-1">info</span>
-            {t('cards.viewDetails')}
-          </button>
+          <div className="absolute bottom-2 left-2 z-20" onClick={(e) => e.stopPropagation()}>
+            <Link href={`/card/${card.id}`}>
+              <button 
+                className="bg-primary text-white text-xs px-3 py-1 rounded-full flex items-center"
+              >
+                <span className="material-icons text-xs mr-1">info</span>
+                {t('cards.viewDetails')}
+              </button>
+            </Link>
+          </div>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BusinessCard as BusinessCardType } from "@shared/schema";
 import BusinessCard from "./BusinessCard";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 
 interface CardSectionProps {
   cards: BusinessCardType[];
@@ -21,6 +22,7 @@ const CardSection: React.FC<CardSectionProps> = ({
   onCreateCard,
   onShare,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-4">
@@ -33,7 +35,7 @@ const CardSection: React.FC<CardSectionProps> = ({
             onClick={onCreateCard}
           >
             <span className="material-icons text-sm mr-1">add_circle</span>
-            Create New
+            {t('cards.createNew')}
           </Button>
         )}
       </div>
@@ -61,7 +63,7 @@ const CardSection: React.FC<CardSectionProps> = ({
               onClick={onCreateCard}
             >
               <span className="material-icons mr-2">add_circle</span>
-              Create Your First Card
+              {t('cards.createYourFirstCard')}
             </Button>
           )}
         </div>

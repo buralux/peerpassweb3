@@ -261,7 +261,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         <div className={`card-flipper ${showBack ? 'is-flipped' : ''}`}>
           {/* FRONT SIDE */}
           <div 
-            className={`card-front absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            className={`card-front absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all cursor-pointer`}
             onClick={flipCard}
           >
             {isOmariTemplate ? (
@@ -491,7 +491,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           
           {/* BACK SIDE */}
           <div 
-            className={`card-back absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`}
+            className={`card-back absolute inset-0 w-full h-full bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 transition-all cursor-pointer`}
             onClick={flipCard}
           >
             {/* Company header */}

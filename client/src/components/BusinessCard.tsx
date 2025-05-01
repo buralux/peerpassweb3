@@ -26,8 +26,12 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   // Créer une URL pour le code QR qui pointe vers le profil
   const cardUrl = `${window.location.origin}/card/${card.id}`;
   
-  // Check if this is the Omari template
+  // Check for specific templates
   const isOmariTemplate = card.template === "omari";
+  const isProfessionalTemplate = card.template === "professional";
+  const isCreativeTemplate = card.template === "creative";
+  const isBoldTemplate = card.template === "bold";
+  const isModernTemplate = card.template === "modern";
   
   const flipCard = () => {
     setShowBack(!showBack);
@@ -99,37 +103,141 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                 </div>
               </div>
             ) : (
-              /* Standard template styling */
-              <div className="flex flex-col items-center justify-center h-full p-4">
-                {/* Avatar */}
-                <Avatar className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 mb-2 shadow-md">
-                  <AvatarImage 
-                    src={card.avatarUrl || DEFAULT_AVATAR_URL} 
-                    alt={`${card.name}'s avatar`} 
-                    className="w-full h-full object-cover"
-                  />
-                  <AvatarFallback className={`${getGradientClass(card.colorScheme || "gold")} text-white text-lg`}>
-                    {card.name?.substring(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+              /* Template styling based on template type */
+              <div className={`h-full rounded-xl overflow-hidden ${getGradientClass(card.colorScheme || "blue-violet")}`}>
+                {/* Professional template */}
+                {isProfessionalTemplate && (
+                  <div className="flex flex-col items-center justify-center h-full p-4 text-white">
+                    <div className="w-full flex justify-end mb-2">
+                      <div className="bg-white/20 px-2 py-0.5 rounded-full text-white text-xs font-bold">
+                        NFT
+                      </div>
+                    </div>
+                    
+                    {/* Avatar */}
+                    <Avatar className="w-16 h-16 rounded-full border-4 border-white/30 mb-3 shadow-md">
+                      <AvatarImage 
+                        src={card.avatarUrl || DEFAULT_AVATAR_URL} 
+                        alt={`${card.name}'s avatar`} 
+                        className="w-full h-full object-cover"
+                      />
+                      <AvatarFallback className="bg-white/20 text-white text-lg">
+                        {card.name?.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    
+                    {/* Name and Title */}
+                    <h3 className="font-bold text-white text-xl tracking-wide mt-1 text-center">
+                      {card.name}
+                    </h3>
+                    <p className="text-white/80 text-sm font-medium mb-2 text-center">
+                      {card.jobTitle}
+                    </p>
+                    
+                    {/* Company */}
+                    <div className="text-white font-medium text-center bg-black/20 px-4 py-1 rounded-full">
+                      {card.company}
+                    </div>
+                  </div>
+                )}
                 
-                {/* Name and Title */}
-                <h3 className="font-bold text-gray-800 dark:text-white text-lg tracking-wide mt-1">
-                  {card.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">
-                  {card.jobTitle}
-                </p>
+                {/* Creative template */}
+                {isCreativeTemplate && (
+                  <div className="flex h-full overflow-hidden text-white">
+                    <div className="w-1/3 bg-black/20 p-4 flex flex-col justify-center items-center">
+                      <Avatar className="w-16 h-16 rounded-full mb-2">
+                        <AvatarImage 
+                          src={card.avatarUrl || DEFAULT_AVATAR_URL} 
+                          alt={`${card.name}'s avatar`} 
+                          className="w-full h-full object-cover"
+                        />
+                        <AvatarFallback className="bg-white/20 text-white text-lg">
+                          {card.name?.substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      
+                      <div className="mt-2 bg-white/20 px-2 py-0.5 rounded-full text-white text-xs font-bold">
+                        NFT
+                      </div>
+                    </div>
+                    
+                    <div className="w-2/3 p-4 flex flex-col justify-center">
+                      <h3 className="font-bold text-white text-xl tracking-wide">
+                        {card.name}
+                      </h3>
+                      <p className="text-white/80 text-sm mb-2">
+                        {card.jobTitle}
+                      </p>
+                      
+                      <h4 className="text-white font-semibold mt-2 bg-black/10 inline-block px-2 py-1 rounded">
+                        {card.company}
+                      </h4>
+                    </div>
+                  </div>
+                )}
                 
-                {/* Company */}
-                <div className="text-gray-800 dark:text-gray-200 font-medium">
-                  {card.company}
-                </div>
+                {/* Bold template */}
+                {isBoldTemplate && (
+                  <div className="h-full flex flex-col text-white">
+                    <div className="h-1/4 bg-black/20 flex items-center justify-between px-4">
+                      <h2 className="font-bold text-lg">{card.company}</h2>
+                      <div className="bg-white/20 px-2 py-0.5 rounded-full text-white text-xs font-bold">
+                        NFT
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1 p-4 flex flex-col justify-center items-center">
+                      <h3 className="font-bold text-white text-2xl tracking-wide mb-1 text-center">
+                        {card.name}
+                      </h3>
+                      <div className="w-12 h-1 bg-white/50 rounded my-2"></div>
+                      <p className="text-white/80 text-sm font-medium text-center">
+                        {card.jobTitle}
+                      </p>
+                    </div>
+                  </div>
+                )}
                 
-                {/* Website */}
-                {card.website && (
-                  <div className="mt-2 text-sm text-primary dark:text-primary/90 font-medium">
-                    {card.website.replace(/^https?:\/\//, '')}
+                {/* Modern template (default) */}
+                {(isModernTemplate || (!isProfessionalTemplate && !isCreativeTemplate && !isBoldTemplate && !isOmariTemplate)) && (
+                  <div className="flex flex-col items-center justify-center h-full p-4 text-white relative">
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-white/20 px-2 py-0.5 rounded-full text-white text-xs font-bold">
+                        NFT
+                      </div>
+                    </div>
+                    
+                    {/* Avatar */}
+                    <Avatar className="w-20 h-20 rounded-full border-4 border-white/30 mb-4 shadow-lg">
+                      <AvatarImage 
+                        src={card.avatarUrl || DEFAULT_AVATAR_URL} 
+                        alt={`${card.name}'s avatar`} 
+                        className="w-full h-full object-cover"
+                      />
+                      <AvatarFallback className="bg-white/20 text-white text-xl">
+                        {card.name?.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    
+                    {/* Name and Title */}
+                    <h3 className="font-bold text-white text-xl tracking-wide mb-1 text-center">
+                      {card.name}
+                    </h3>
+                    <p className="text-white/80 text-sm font-medium mb-2 text-center">
+                      {card.jobTitle}
+                    </p>
+                    
+                    {/* Company */}
+                    <div className="text-white font-medium text-center mt-1">
+                      {card.company}
+                    </div>
+                    
+                    {/* Website */}
+                    {card.website && (
+                      <div className="mt-3 text-sm text-white/90 font-medium bg-black/20 px-3 py-1 rounded-full">
+                        {card.website.replace(/^https?:\/\//, '')}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

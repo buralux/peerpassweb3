@@ -88,49 +88,88 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
       {/* Right Content - 3D Card Animation */}
       <div className="flex-1 relative max-w-md">
         <div className="absolute w-full h-full bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-3xl filter blur-3xl"></div>
-        <div className="relative w-full aspect-square bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:scale-105 transition-transform">
-          <div className="absolute top-0 right-0 bg-gradient-to-bl from-primary to-purple-600 text-white p-2 px-4 rounded-bl-xl">
-            NFT
-          </div>
-          
-          <div className="flex flex-col h-full justify-between">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-purple-600"></div>
-              <div>
-                <h3 className="font-bold text-xl text-gray-800 dark:text-white">AZIZ LAGHZAOUI</h3>
-                <p className="text-gray-600 dark:text-gray-400">Chairman</p>
+        
+        {/* Carte de visite avec format rectangulaire et animation flip */}
+        <div className="business-card cursor-pointer mx-auto relative" onClick={() => {
+          // Trouver l'élément avec la classe .card-flipper et ajouter/enlever la classe .is-flipped
+          const cardEl = document.querySelector('.card-flipper');
+          if (cardEl) {
+            cardEl.classList.toggle('is-flipped');
+          }
+        }}>
+          <div className="card-flipper">
+            {/* FRONT SIDE */}
+            <div className="card-front bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 overflow-hidden border border-gray-200 dark:border-gray-700">
+              <div className="absolute top-0 right-0 bg-gradient-to-bl from-primary to-purple-600 text-white p-2 px-4 rounded-bl-xl">
+                NFT
+              </div>
+              
+              <div className="flex flex-col h-full justify-between">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-purple-600"></div>
+                  <div>
+                    <h3 className="font-bold text-xl text-gray-800 dark:text-white">AZIZ LAGHZAOUI</h3>
+                    <p className="text-gray-600 dark:text-gray-400">Chairman</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-2 flex-1">
+                  <p className="text-gray-700 dark:text-gray-300 font-medium">Concept4.crypto</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    Leader dans l'innovation blockchain et la finance décentralisée.
+                  </p>
+                </div>
+                
+                {/* Flip indicator */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
+                  <span className="material-icons text-xs mr-1">touch_app</span>
+                  <span>Tap to flip</span>
+                </div>
               </div>
             </div>
             
-            <div className="space-y-2 flex-1">
-              <p className="text-gray-700 dark:text-gray-300 font-medium">Concept4.crypto</p>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Leader dans l'innovation blockchain et la finance décentralisée.
-              </p>
-              
-              <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm mt-3">
-                <span className="material-icons text-sm mr-2">mail</span>
-                <span>aziz.laghzaoui@concept4.crypto</span>
+            {/* BACK SIDE */}
+            <div className="card-back bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+              {/* Company header */}
+              <div className="bg-gradient-to-r from-primary to-purple-600 h-[20%] w-full flex items-center justify-center relative">
+                <h2 className="text-white font-bold text-lg">
+                  Concept4.crypto
+                </h2>
               </div>
               
-              <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
-                <span className="material-icons text-sm mr-2">phone</span>
-                <span>+212 687654321</span>
-              </div>
-            </div>
-            
-            <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex space-x-2">
-                <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center">
-                  <span className="material-icons text-blue-600 dark:text-blue-200 text-sm">language</span>
+              <div className="h-[80%] p-6 flex justify-between">
+                {/* Contact Information */}
+                <div className="w-[65%] flex flex-col justify-center space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center">
+                    <span className="material-icons text-sm mr-2 text-primary dark:text-primary/80">mail</span>
+                    <span className="truncate">aziz.laghzaoui@concept4.crypto</span>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <span className="material-icons text-sm mr-2 text-primary dark:text-primary/80">phone</span>
+                    <span>+212 687654321</span>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <span className="material-icons text-sm mr-2 text-primary dark:text-primary/80">language</span>
+                    <span className="truncate">concept4.crypto</span>
+                  </div>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center">
-                  <span className="material-icons text-blue-600 dark:text-blue-200 text-sm">linkedin</span>
+                
+                {/* QR Code */}
+                <div className="w-[35%] flex items-center justify-center">
+                  <div className="p-1 bg-white rounded-lg">
+                    <div className="w-20 h-20 bg-gray-100 flex items-center justify-center">
+                      <span className="material-icons text-gray-600 text-2xl">qr_code</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               
-              <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                <span className="material-icons text-gray-600 dark:text-gray-300">qr_code</span>
+              {/* Flip indicator */}
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-gray-100 dark:text-gray-200 text-[10px] flex items-center opacity-80 hover:opacity-100 z-10 bg-primary/70 dark:bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full transition-all shadow-md hover:shadow-lg">
+                <span className="material-icons text-xs mr-1">touch_app</span>
+                <span>Tap to flip</span>
               </div>
             </div>
           </div>

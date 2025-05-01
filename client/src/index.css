@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Styles pour l'effet de carte recto-verso */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-visibility-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-0 {
+  transform: rotateY(0deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 :root {
   --background: 210 40% 98%;
   --foreground: 240 10% 3.9%;

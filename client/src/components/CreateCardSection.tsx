@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createBusinessCardSchema } from "@shared/schema";
+import { createBusinessCardSchema, CardCustomization } from "@shared/schema";
+import AdvancedCustomizationPanel from "./AdvancedCustomizationPanel";
 import { z } from "zod";
 import { CARD_TEMPLATES, COLOR_SCHEMES, SOCIAL_PLATFORMS } from "@/lib/constants";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -134,6 +135,9 @@ const CreateCardSection: React.FC = () => {
   // State pour forcer un refresh de l'aperçu
   const [forceRefresh, setForceRefresh] = useState(false);
   
+  // State pour les personnalisations avancées
+  const [customization, setCustomization] = useState<CardCustomization>({});
+  
   // Watch form fields for changes
   const name = form.watch("name");
   const jobTitle = form.watch("jobTitle");
@@ -163,7 +167,7 @@ const CreateCardSection: React.FC = () => {
     avatarUrl: avatarUrl || "",
     socialLinks: socialLinks || {},
     metadata: {},
-    customization: {}, // Empty customization object for now
+    customization: customization, // Use the customization state
     ipfsHash: null,
     isMinted: false,
     createdAt: new Date(),
@@ -211,7 +215,7 @@ const CreateCardSection: React.FC = () => {
         {/* Step Indicator */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            {['template', 'details', 'social', 'preview'].map((step, index) => (
+            {['template', 'details', 'social', 'customize', 'preview'].map((step, index) => (
               <div key={step}>
                 {/* Step circle */}
                 <div 
@@ -236,9 +240,9 @@ const CreateCardSection: React.FC = () => {
                 </div>
                 
                 {/* Connector line */}
-                {index < 3 && (
+                {index < 4 && (
                   <div className={`flex-1 h-0.5 mx-2 ${
-                    index < ['template', 'details', 'social', 'preview'].indexOf(currentStep)
+                    index < ['template', 'details', 'social', 'customize', 'preview'].indexOf(currentStep)
                       ? 'bg-primary' 
                       : 'bg-gray-200 dark:bg-gray-700'
                   }`} />

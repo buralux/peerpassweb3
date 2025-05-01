@@ -23,7 +23,11 @@
     "profile": "Profil",
     "help": "Aide",
     "logout": "Déconnexion",
-    "close": "Fermer"
+    "close": "Fermer",
+    "demoMode": "Mode Démo",
+    "demoActivated": "Mode démo activé",
+    "demoDescription": "Vous pouvez maintenant explorer l'application avec des données de démonstration.",
+    "demoModeActive": "Vous êtes en mode démonstration. Les données affichées sont fictives."
   },
   "app": {
     "name": "PeerPass",
@@ -150,6 +154,7 @@
   },
   "errors": {
     "walletNotConnected": "Portefeuille non connecté",
+    "connectionError": "Impossible de se connecter au portefeuille. Essayez le mode démo pour explorer l'application.",
     "missingInfo": "Informations manquantes",
     "invalidAddress": "Adresse de portefeuille invalide",
     "networkError": "Erreur de réseau",

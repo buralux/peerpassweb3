@@ -23,7 +23,11 @@
     "profile": "Profile",
     "help": "Help",
     "logout": "Logout",
-    "close": "Close"
+    "close": "Close",
+    "demoMode": "Demo Mode",
+    "demoActivated": "Demo mode activated",
+    "demoDescription": "You can now explore the application with demo data.",
+    "demoModeActive": "You are in demo mode. The displayed data is fictional."
   },
   "app": {
     "name": "PeerPass",

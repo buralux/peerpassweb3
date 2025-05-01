@@ -12,6 +12,7 @@ import CardSection from "@/components/CardSection";
 import CollectedCardsSection from "@/components/CollectedCardsSection";
 import { BusinessCard } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 // Exemples de cartes de visite pour le mode démo
 const DEMO_CARDS: BusinessCard[] = [
@@ -88,6 +89,7 @@ const HomePage: React.FC = () => {
   const [, navigate] = useLocation();
   const [demoMode, setDemoMode] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   // Fetch user's cards
   const { data: userCards = [], isLoading: isLoadingUserCards } = useQuery<BusinessCard[]>({
@@ -109,8 +111,8 @@ const HomePage: React.FC = () => {
       // L'erreur est déjà gérée par le hook useWallet
       
       toast({
-        title: "Erreur de connexion",
-        description: "Impossible de se connecter au portefeuille. Essayez le mode démo pour explorer l'application.",
+        title: t('errors.walletNotConnected'),
+        description: t('errors.connectionError'),
         variant: "destructive",
       });
     }
@@ -123,8 +125,8 @@ const HomePage: React.FC = () => {
   const handleEnterDemoMode = () => {
     setDemoMode(true);
     toast({
-      title: "Mode Démo Activé",
-      description: "Vous pouvez maintenant explorer l'application avec des données de démonstration.",
+      title: t('common.demoActivated'),
+      description: t('common.demoDescription'),
     });
   };
   
@@ -160,7 +162,7 @@ const HomePage: React.FC = () => {
             </div>
             <div className="ml-3">
               <p className="text-sm">
-                Vous êtes en mode démonstration. Les données affichées sont fictives.
+                {t('common.demoModeActive')}
               </p>
             </div>
           </div>
@@ -170,17 +172,17 @@ const HomePage: React.FC = () => {
       <DashboardStats
         cardCount={displayedCards.length}
         collectedCount={displayedCollectedCards.length}
-        chainName={demoMode ? "Mode Démo" : ACTIVE_CHAIN.chainName}
+        chainName={demoMode ? t('common.demoMode') : ACTIVE_CHAIN.chainName}
         walletAddress={displayAddress}
       />
       
       <CardSection
-        title="Your Cards"
+        title={t('cards.myCards')}
         cards={displayedCards}
         showCreateButton={true}
         onCreateCard={handleCreateCard}
         onShare={handleShareCard}
-        emptyStateMessage="You haven't created any cards yet"
+        emptyStateMessage={t('cards.emptyState')}
       />
       
       <CollectedCardsSection

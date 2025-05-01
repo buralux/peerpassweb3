@@ -13,6 +13,8 @@
     "connect": "Connecter",
     "disconnect": "Déconnecter",
     "loading": "Chargement...",
+    "nextStep": "Étape suivante",
+    "prevStep": "Précédent",
     "search": "Rechercher...",
     "emptyState": "Aucun élément trouvé",
     "error": "Une erreur s'est produite",

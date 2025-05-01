@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const BottomNavigation: React.FC = () => {
   const [location] = useLocation();
+  const { t } = useTranslation();
   
   const isActive = (path: string) => {
     return location === path;
@@ -21,35 +22,35 @@ const BottomNavigation: React.FC = () => {
         <Link href="/">
           <div className={getItemClasses("/")}>
             <span className="material-icons">home</span>
-            <span className="text-xs mt-1">Home</span>
+            <span className="text-xs mt-1">{t('nav.home')}</span>
           </div>
         </Link>
         
         <Link href="/cards">
           <div className={getItemClasses("/cards")}>
             <span className="material-icons">style</span>
-            <span className="text-xs mt-1">Cards</span>
+            <span className="text-xs mt-1">{t('nav.cards')}</span>
           </div>
         </Link>
         
         <Link href="/create">
           <div className={getItemClasses("/create")}>
             <span className="material-icons">add_circle</span>
-            <span className="text-xs mt-1">Create</span>
+            <span className="text-xs mt-1">{t('nav.create')}</span>
           </div>
         </Link>
         
         <Link href="/scan">
           <div className={getItemClasses("/scan")}>
             <span className="material-icons">qr_code_scanner</span>
-            <span className="text-xs mt-1">Scan</span>
+            <span className="text-xs mt-1">{t('nav.scan')}</span>
           </div>
         </Link>
         
         <Link href="/profile">
           <div className={getItemClasses("/profile")}>
             <span className="material-icons">person</span>
-            <span className="text-xs mt-1">Profile</span>
+            <span className="text-xs mt-1">{t('nav.profile')}</span>
           </div>
         </Link>
       </div>

@@ -1,8 +1,7 @@
-import React, { useState, useRef } from "react";
-import { getGradientClass, getMutedTextColor } from "@/lib/utils";
+import React, { useState } from "react";
+import { getGradientClass } from "@/lib/utils";
 import { BusinessCard as BusinessCardType } from "@shared/schema";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { formatWalletAddress } from "@/lib/utils";
 import { DEFAULT_AVATAR_URL } from "@/lib/constants";
 import { QRCodeSVG } from "qrcode.react";
 import { useTranslation } from "react-i18next";
@@ -31,49 +30,27 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   // Check if this is the Omari template
   const isOmariTemplate = card.template === "omari";
   
-  // Référence vers le div de la carte
-  const cardRef = useRef<HTMLDivElement>(null);
-  
-  // Fonction spécifique pour retourner la carte
   const flipCard = () => {
     setShowBack(!showBack);
   };
   
-  // Gestionnaire d'événement principal pour les clics sur la carte
-  const handleCardClick = (e: React.MouseEvent) => {
-    // Empêcher la navigation et autres comportements par défaut
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Ne pas retourner la carte si on clique sur le bouton ou le lien
-    const target = e.target as HTMLElement;
-    if (target.closest('button') || target.closest('a') || target.closest('div[data-no-flip="true"]')) {
-      return;
-    }
-    
-    // Sinon, retourner la carte
-    flipCard();
-  };
-  
   return (
-    <div className="relative group mb-6" style={{ perspective: "1000px" }}>
+    <div className="relative group mb-6 perspective-1000">
       {/* Glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       
-      <div className="relative w-full h-[240px] cursor-pointer">
-        {/* 3D Card */}
+      <div className="relative w-full h-[240px]">
+        {/* Card Container with 3D effect */}
         <div 
-          className={`relative bg-white dark:bg-gray-900 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 w-full h-full transition-all duration-700 transform-gpu preserve-3d ${isPreview ? 'pointer-events-none' : ''}`} 
+          className={`relative bg-white dark:bg-gray-900 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 w-full h-full transition-all duration-700 preserve-3d ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`} 
           style={{ 
-            transformStyle: "preserve-3d", 
-            transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)",
-            aspectRatio: "1.8 / 1" 
+            aspectRatio: "1.8 / 1",
+            transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)"
           }}
-          ref={cardRef}
-          onClick={handleCardClick}
+          onClick={flipCard}
         >
           {/* FRONT SIDE OF CARD */}
-          <div className="absolute w-full h-full backface-hidden" style={{ backfaceVisibility: "hidden" }}>
+          <div className="absolute w-full h-full backface-hidden card-front">
             {isOmariTemplate ? (
               /* Omari Construction Card - Dark/Gold Theme */
               <div className="flex h-full bg-gray-900 text-white overflow-hidden rounded-xl">
@@ -164,7 +141,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           </div>
         
           {/* BACK SIDE OF CARD */}
-          <div className="absolute w-full h-full backface-hidden" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+          <div className="absolute w-full h-full backface-hidden card-back" style={{ transform: "rotateY(180deg)" }}>
             {/* Company header */}
             <div className={`${isOmariTemplate ? 'bg-amber-700' : getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center`}>
               <h2 className="text-white font-bold text-lg">
@@ -241,10 +218,14 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         
         {/* Details button */}
         {!isPreview && (
-          <div className="absolute bottom-2 left-2 z-20" onClick={(e) => e.stopPropagation()}>
+          <div 
+            className="absolute bottom-2 left-2 z-30"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Link href={`/card/${card.id}`}>
               <button 
                 className="bg-primary text-white text-xs px-3 py-1 rounded-full flex items-center"
+                onClick={(e) => e.stopPropagation()}
               >
                 <span className="material-icons text-xs mr-1">info</span>
                 {t('cards.viewDetails')}

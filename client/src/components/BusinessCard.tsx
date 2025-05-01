@@ -274,13 +274,11 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     NFT
                   </div>
                   
-                  {/* Omari Construction Logo */}
+                  {/* Omari Construction Logo stylisé */}
                   <div className="w-24 h-24 flex items-center justify-center">
-                    <img 
-                      src="/omari-logo.svg" 
-                      alt="Omari Construction Logo" 
-                      className="h-full w-auto object-contain"
-                    />
+                    <div className="w-20 h-20 bg-amber-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                      OC
+                    </div>
                   </div>
                 </div>
                 

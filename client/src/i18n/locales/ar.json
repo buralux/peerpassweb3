@@ -121,7 +121,15 @@
     "cardCreated": "تم إنشاء البطاقة بنجاح",
     "cardUpdated": "تم تحديث البطاقة بنجاح",
     "validationError": "يرجى تصحيح الأخطاء في النموذج",
-    "stepCounter": "الخطوة {{current}} من {{total}}"
+    "stepCounter": "الخطوة {{current}} من {{total}}",
+    "designCard": "صمم بطاقة عملك المهنية NFT",
+    "selectTemplateDesc": "اختر نمط قالب لبطاقة عملك NFT",
+    "selectColorDesc": "حدد لوحة الألوان لبطاقة عملك NFT",
+    "previewDesc": "هكذا ستبدو بطاقة عملك NFT",
+    "blockchainInfo": "سيتم إنشاء بطاقة عملك NFT على شبكة BNB Chain Testnet. سيتم تخزينها بشكل دائم على البلوكتشين ويمكن مشاركتها مع جهات الاتصال المهنية الخاصة بك.",
+    "nftOnChain": "NFT على BNB Chain",
+    "uniqueToken": "سيتم إنشاء بطاقتك كرمز NFT فريد",
+    "createNFTCard": "إنشاء بطاقة NFT"
   },
   "scan": {
     "title": "مسح بطاقة",

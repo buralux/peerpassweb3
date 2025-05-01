@@ -121,7 +121,15 @@
     "cardCreated": "Carte créée avec succès",
     "cardUpdated": "Carte mise à jour avec succès",
     "validationError": "Veuillez corriger les erreurs dans le formulaire",
-    "stepCounter": "Étape {{current}} sur {{total}}"
+    "stepCounter": "Étape {{current}} sur {{total}}",
+    "designCard": "Concevez votre carte de visite NFT professionnelle",
+    "selectTemplateDesc": "Sélectionnez un style de modèle pour votre carte de visite NFT",
+    "selectColorDesc": "Définissez la palette de couleurs pour votre carte de visite NFT",
+    "previewDesc": "Voici à quoi ressemblera votre carte de visite NFT",
+    "blockchainInfo": "Votre carte de visite NFT sera créée sur la BNB Chain Testnet. Elle sera stockée de façon permanente sur la blockchain et pourra être partagée avec vos contacts professionnels.",
+    "nftOnChain": "NFT sur BNB Chain",
+    "uniqueToken": "Votre carte sera créée comme un token NFT unique",
+    "createNFTCard": "Créer la carte NFT"
   },
   "scan": {
     "title": "Scanner une carte",

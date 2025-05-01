@@ -18,6 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useWallet } from "@/hooks/use-wallet";
 import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslation } from "react-i18next";
 
 // Extend the schema for the form
 const createCardFormSchema = createBusinessCardSchema.extend({
@@ -29,6 +30,7 @@ type CreateCardFormData = z.infer<typeof createCardFormSchema>;
 const CreateCardSection: React.FC = () => {
   const { wallet } = useWallet();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState<'template' | 'details' | 'preview' | 'social'>('template');
@@ -181,8 +183,8 @@ const CreateCardSection: React.FC = () => {
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2"></div>
         
-        <h2 className="font-bold text-2xl relative">Create New Card</h2>
-        <p className="text-blue-100 text-sm relative">Design your professional NFT business card</p>
+        <h2 className="font-bold text-2xl relative">{t('create.title')}</h2>
+        <p className="text-blue-100 text-sm relative">{t('create.designCard')}</p>
       </div>
       
       {/* Main Content */}

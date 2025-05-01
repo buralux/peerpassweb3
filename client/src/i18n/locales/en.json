@@ -121,7 +121,15 @@
     "cardCreated": "Card created successfully",
     "cardUpdated": "Card updated successfully",
     "validationError": "Please fix the errors in the form",
-    "stepCounter": "Step {{current}} of {{total}}"
+    "stepCounter": "Step {{current}} of {{total}}",
+    "designCard": "Design your professional NFT business card",
+    "selectTemplateDesc": "Select a template style for your NFT business card",
+    "selectColorDesc": "Set the color palette for your NFT business card",
+    "previewDesc": "This is how your NFT business card will look",
+    "blockchainInfo": "Your NFT business card will be minted on the BNB Chain Testnet. It will be stored permanently on the blockchain and can be shared with your professional contacts.",
+    "nftOnChain": "NFT on BNB Chain",
+    "uniqueToken": "Your card will be minted as a unique NFT token",
+    "createNFTCard": "Create NFT Card"
   },
   "scan": {
     "title": "Scan a Card",

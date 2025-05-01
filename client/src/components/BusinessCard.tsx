@@ -42,15 +42,16 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
       <div className="relative w-full h-[240px]">
         {/* Card Container with 3D effect */}
         <div 
-          className={`relative bg-white dark:bg-gray-900 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 w-full h-full transition-all duration-700 preserve-3d ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`} 
+          className={`relative bg-white dark:bg-gray-900 overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 w-full h-full transition-all duration-700 ${isPreview ? 'pointer-events-none' : 'cursor-pointer'}`} 
           style={{ 
             aspectRatio: "1.8 / 1",
-            transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)"
+            transform: showBack ? "rotateY(180deg)" : "rotateY(0deg)",
+            transformStyle: "preserve-3d"
           }}
           onClick={flipCard}
         >
           {/* FRONT SIDE OF CARD */}
-          <div className="absolute w-full h-full backface-hidden card-front">
+          <div className="absolute w-full h-full card-front" style={{ backfaceVisibility: "hidden" }}>
             {isOmariTemplate ? (
               /* Omari Construction Card - Dark/Gold Theme */
               <div className="flex h-full bg-gray-900 text-white overflow-hidden rounded-xl">
@@ -141,15 +142,18 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           </div>
         
           {/* BACK SIDE OF CARD */}
-          <div className="absolute w-full h-full backface-hidden card-back" style={{ transform: "rotateY(180deg)" }}>
+          <div className="absolute w-full h-full card-back" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+            {/* Background de la carte */}
+            <div className={`bg-white dark:bg-gray-900 absolute inset-0 w-full h-full rounded-2xl`}></div>
+            
             {/* Company header */}
-            <div className={`${isOmariTemplate ? 'bg-amber-700' : getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center`}>
+            <div className={`${isOmariTemplate ? 'bg-amber-700' : getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center relative rounded-t-2xl`}>
               <h2 className="text-white font-bold text-lg">
                 {isOmariTemplate ? "OMARI CONSTRUCTION" : (card.company || "PeerPass")}
               </h2>
             </div>
             
-            <div className="h-[80%] p-3 flex justify-between">
+            <div className="h-[80%] p-3 flex justify-between relative">
               {/* Contact Information */}
               <div className={`${isOmariTemplate ? 'w-[60%]' : 'w-[65%]'} flex flex-col justify-center space-y-1.5 text-xs ${isOmariTemplate ? 'text-black dark:text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
                 {card.email && (

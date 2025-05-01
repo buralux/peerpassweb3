@@ -10,6 +10,7 @@
 .backface-hidden {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transform: rotateY(0deg);
 }
 
 .preserve-3d {

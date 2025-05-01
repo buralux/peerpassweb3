@@ -159,7 +159,15 @@
     "blockchainInfo": "سيتم إنشاء بطاقة عملك NFT على شبكة BNB Chain Testnet. سيتم تخزينها بشكل دائم على البلوكتشين ويمكن مشاركتها مع جهات الاتصال المهنية الخاصة بك.",
     "nftOnChain": "NFT على BNB Chain",
     "uniqueToken": "سيتم إنشاء بطاقتك كرمز NFT فريد",
-    "createNFTCard": "إنشاء بطاقة NFT"
+    "createNFTCard": "إنشاء بطاقة NFT",
+    "ipfsStored": "مخزن على IPFS",
+    "ipfsDescription": "سيتم تخزين بيانات البطاقة على IPFS للامركزية",
+    "createInDemoMode": "إنشاء في وضع العرض التوضيحي",
+    "demoCardCreated": "تم إنشاء بطاقة العرض التوضيحي",
+    "demoCardCreatedSuccess": "تم إنشاء بطاقة العرض التوضيحي الخاصة بك بنجاح",
+    "testModeActive": "وضع الاختبار نشط",
+    "walletDisabledInfo": "تم تعطيل محفظة MetaMask مؤقتًا لأغراض الاختبار. استخدم وضع العرض التوضيحي لإنشاء بطاقات اختبار.",
+    "creating": "جاري الإنشاء..."
   },
   "scan": {
     "title": "مسح بطاقة",

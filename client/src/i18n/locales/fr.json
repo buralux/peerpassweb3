@@ -159,7 +159,15 @@
     "blockchainInfo": "Votre carte de visite NFT sera créée sur la BNB Chain Testnet. Elle sera stockée de façon permanente sur la blockchain et pourra être partagée avec vos contacts professionnels.",
     "nftOnChain": "NFT sur BNB Chain",
     "uniqueToken": "Votre carte sera créée comme un token NFT unique",
-    "createNFTCard": "Créer la carte NFT"
+    "createNFTCard": "Créer la carte NFT",
+    "ipfsStored": "Stocké sur IPFS",
+    "ipfsDescription": "Les données de la carte seront stockées sur IPFS pour la décentralisation",
+    "createInDemoMode": "Créer en mode démo",
+    "demoCardCreated": "Carte démo créée",
+    "demoCardCreatedSuccess": "Votre carte de visite démo a été créée avec succès",
+    "testModeActive": "Mode Test Actif",
+    "walletDisabledInfo": "Le wallet MetaMask est temporairement désactivé pour les tests. Utilisez le mode démo pour créer des cartes de test.",
+    "creating": "Création en cours..."
   },
   "scan": {
     "title": "Scanner une carte",

@@ -77,10 +77,11 @@ const CreateCardSection: React.FC = () => {
     try {
       setIsSubmitting(true);
       
-      // Create the card
+      // Create the card with customization data
       const response = await apiRequest("POST", "/api/cards", {
         ...data,
         owner: wallet.address,
+        customization: customization,
       });
       
       const newCard = await response.json();
@@ -734,6 +735,54 @@ const CreateCardSection: React.FC = () => {
               </div>
             )}
             
+            {/* Customization Step */}
+            {currentStep === 'customize' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <AdvancedCustomizationPanel 
+                      customization={customization}
+                      onChange={setCustomization}
+                    />
+                  </div>
+                  
+                  <div className="sticky top-4">
+                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 mb-4">
+                      <h3 className="font-medium text-lg text-gray-800 dark:text-white">{t('customize.preview')}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t('customize.previewDescription')}</p>
+                    </div>
+                    <CardPreview 
+                      key={`customize-preview-${selectedTemplate}-${selectedColorScheme}-${JSON.stringify(customization)}-${forceRefresh}`}
+                      card={previewCard}
+                      templateId={selectedTemplate}
+                      colorSchemeId={selectedColorScheme}
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex justify-between mt-6">
+                  <Button
+                    type="button"
+                    onClick={goToPrevStep}
+                    variant="outline"
+                    className="border-gray-300 dark:border-gray-600"
+                  >
+                    <span className="material-icons mr-2">arrow_back</span>
+                    {t('common.prevStep')}
+                  </Button>
+                  
+                  <Button
+                    type="button"
+                    onClick={goToNextStep}
+                    className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg"
+                  >
+                    {t('common.nextStep')}
+                    <span className="material-icons ml-2">arrow_forward</span>
+                  </Button>
+                </div>
+              </div>
+            )}
+            
             {/* Preview & Submit Step */}
             {currentStep === 'preview' && (
               <div className="space-y-6">
@@ -743,7 +792,7 @@ const CreateCardSection: React.FC = () => {
                   
                   <div className="mx-auto max-w-sm">
                     <CardPreview 
-                      key={`final-preview-${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`}
+                      key={`final-preview-${selectedTemplate}-${selectedColorScheme}-${JSON.stringify(customization)}-${forceRefresh}`}
                       card={previewCard}
                       templateId={selectedTemplate}
                       colorSchemeId={selectedColorScheme}

@@ -9,6 +9,7 @@ export const CARD_TEMPLATES: { id: CardTemplate; name: string; description: stri
   { id: "bold", name: "Bold", description: "Stand out with bold amber and red gradient" },
   { id: "modern", name: "Modern", description: "Sleek modern design with purple gradient" },
   { id: "minimal", name: "Minimal", description: "Clean minimal design with gray gradient" },
+  { id: "omari", name: "Omari", description: "Luxurious black and gold design for construction" },
 ];
 
 export const COLOR_SCHEMES: { id: ColorScheme; name: string; colors: string[] }[] = [

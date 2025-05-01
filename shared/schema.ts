@@ -82,6 +82,7 @@ export const cardTemplates = [
   "bold",         // amber gradient
   "modern",       // purple gradient
   "minimal",      // gray gradient
+  "omari",        // gold/black gradient
 ] as const;
 
 export const colorSchemes = [
@@ -90,6 +91,7 @@ export const colorSchemes = [
   "amber-red", // amber to red gradient
   "purple-pink", // purple to pink gradient
   "gray-dark", // gray to dark gradient
+  "gold-black", // gold to black gradient (style Omari)
   "custom", // custom color scheme
 ] as const;
 

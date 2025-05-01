@@ -22,6 +22,8 @@ export function getGradientClass(colorScheme: string): string {
       return "bg-gradient-to-br from-purple-600 to-pink-500";
     case "gray-dark":
       return "bg-gradient-to-br from-gray-700 to-gray-900";
+    case "gold-black":
+      return "bg-gradient-to-br from-yellow-600 to-black";
     default:
       return "bg-gradient-to-br from-blue-600 to-violet-600";
   }
@@ -54,6 +56,8 @@ export function getMutedTextColor(colorScheme: string): string {
       return "text-purple-100";
     case "gray-dark":
       return "text-gray-300";
+    case "gold-black":
+      return "text-yellow-100";
     default:
       return "text-blue-100";
   }

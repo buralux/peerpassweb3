@@ -33,7 +33,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
           </button>
           <div 
             className="flex items-center cursor-pointer" 
-            onClick={() => navigate('/')}
+            onClick={() => window.location.href = '/'}
           >
             <img 
               src={peerpassLogo} 

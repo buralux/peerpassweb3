@@ -116,6 +116,24 @@
       "email": "Email",
       "phone": "Téléphone"
     },
+    "socialInfo": {
+      "title": "Image de profil et site web",
+      "subtitle": "Ajoutez votre image professionnelle et votre site web.",
+      "avatarUrl": "URL de l'avatar",
+      "avatarHelp": "Entrez l'URL de votre image de profil. Pour de meilleurs résultats, utilisez une image carrée.",
+      "website": "Site web"
+    },
+    "socialNetworks": {
+      "title": "Réseaux sociaux",
+      "subtitle": "Connectez vos comptes de réseaux sociaux professionnels.",
+      "connected": "Connecté",
+      "notConnected": "Non connecté",
+      "added": "Ajouté"
+    },
+    "preview": {
+      "title": "Aperçu de votre carte",
+      "subtitle": "Voici à quoi ressemblera votre carte de visite NFT."
+    },
     "fullName": "Nom complet",
     "jobTitle": "Intitulé du poste",
     "company": "Entreprise",

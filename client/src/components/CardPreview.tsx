@@ -50,11 +50,16 @@ const CardPreview: React.FC<CardPreviewProps> = ({
   ]);
   
   // Utiliser useMemo pour éviter de recréer l'objet à chaque rendu sauf si nécessaire
-  const previewCard = useMemo(() => ({
-    ...card,
-    template: templateId,
-    colorScheme: colorSchemeId
-  }), [
+  const previewCard = useMemo(() => {
+    // Créer une copie profonde pour éviter tout partage d'état
+    const updatedCard = {
+      ...JSON.parse(JSON.stringify(card)),
+      template: templateId,
+      colorScheme: colorSchemeId
+    };
+    console.log("CardPreview - Updated card template:", templateId, "colorScheme:", colorSchemeId);
+    return updatedCard;
+  }, [
     card,
     templateId, 
     colorSchemeId

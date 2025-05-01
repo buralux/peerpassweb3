@@ -507,7 +507,7 @@ const CreateCardSection: React.FC = () => {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-gray-700 dark:text-gray-300">Phone</FormLabel>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.phone')}</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">

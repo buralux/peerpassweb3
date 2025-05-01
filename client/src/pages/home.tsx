@@ -158,7 +158,11 @@ const DEMO_COLLECTED_CARDS: BusinessCard[] = [
 const HomePage: React.FC = () => {
   const { wallet, connect, isConnected } = useWallet();
   const [, navigate] = useLocation();
-  const [demoMode, setDemoMode] = useState(false);
+  const [demoMode, setDemoMode] = useState(() => {
+    // Récupérer l'état du mode démo du localStorage
+    const savedDemoMode = localStorage.getItem('peerpass_demo_mode');
+    return savedDemoMode === 'true';
+  });
   const { toast } = useToast();
   const { t } = useTranslation();
   
@@ -195,6 +199,8 @@ const HomePage: React.FC = () => {
   
   const handleEnterDemoMode = () => {
     setDemoMode(true);
+    // Enregistrer l'état du mode démo dans localStorage
+    localStorage.setItem('peerpass_demo_mode', 'true');
     toast({
       title: t('common.demoActivated'),
       description: t('common.demoDescription'),
@@ -230,15 +236,26 @@ const HomePage: React.FC = () => {
     <>
       {demoMode && (
         <div className="bg-amber-100 border-l-4 border-amber-500 text-amber-700 p-4 mb-4 rounded">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <span className="material-icons">info</span>
+          <div className="flex justify-between items-center">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <span className="material-icons">info</span>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm">
+                  {t('common.demoModeActive')}
+                </p>
+              </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm">
-                {t('common.demoModeActive')}
-              </p>
-            </div>
+            <button 
+              onClick={() => {
+                setDemoMode(false);
+                localStorage.removeItem('peerpass_demo_mode');
+              }}
+              className="text-amber-700 hover:text-amber-900"
+            >
+              <span className="material-icons text-sm">close</span>
+            </button>
           </div>
         </div>
       )}

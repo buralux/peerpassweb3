@@ -159,7 +159,15 @@
     "blockchainInfo": "Your NFT business card will be minted on the BNB Chain Testnet. It will be stored permanently on the blockchain and can be shared with your professional contacts.",
     "nftOnChain": "NFT on BNB Chain",
     "uniqueToken": "Your card will be minted as a unique NFT token",
-    "createNFTCard": "Create NFT Card"
+    "createNFTCard": "Create NFT Card",
+    "ipfsStored": "IPFS Stored",
+    "ipfsDescription": "Card data will be stored on IPFS for decentralization",
+    "createInDemoMode": "Create in Demo Mode",
+    "demoCardCreated": "Demo Card Created",
+    "demoCardCreatedSuccess": "Your demo business card has been created successfully",
+    "testModeActive": "Test Mode Active",
+    "walletDisabledInfo": "The MetaMask wallet is temporarily disabled for testing. Use demo mode to create test cards.",
+    "creating": "Creating..."
   },
   "scan": {
     "title": "Scan a Card",

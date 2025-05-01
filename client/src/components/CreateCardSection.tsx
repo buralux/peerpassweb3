@@ -758,10 +758,10 @@ const CreateCardSection: React.FC = () => {
                     <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                       <div className="flex items-center text-gray-700 dark:text-gray-300">
                         <span className="material-icons text-primary mr-2">database</span>
-                        <span className="font-medium">IPFS Stored</span>
+                        <span className="font-medium">{t('create.ipfsStored')}</span>
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        Card data will be stored on IPFS for decentralization
+                        {t('create.ipfsDescription')}
                       </p>
                     </div>
                   </div>
@@ -787,8 +787,8 @@ const CreateCardSection: React.FC = () => {
                           setIsSubmitting(true);
                           setTimeout(() => {
                             toast({
-                              title: "Demo Card Created",
-                              description: "Your demo business card has been created successfully",
+                              title: t('create.demoCardCreated'),
+                              description: t('create.demoCardCreatedSuccess'),
                             });
                             setIsSubmitting(false);
                             // Redirection vers la page d'accueil
@@ -797,7 +797,7 @@ const CreateCardSection: React.FC = () => {
                         }}
                       >
                         <span className="material-icons">visibility</span>
-                        <span>Create in Demo Mode</span>
+                        <span>{t('create.createInDemoMode')}</span>
                       </Button>
                       
                       {/* Real Creation Button */}
@@ -809,12 +809,12 @@ const CreateCardSection: React.FC = () => {
                         {isSubmitting ? (
                           <>
                             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                            <span>Creating...</span>
+                            <span>{t('common.creating')}</span>
                           </>
                         ) : (
                           <>
                             <span className="material-icons">generating_tokens</span>
-                            <span>Create NFT Card</span>
+                            <span>{t('create.createNFTCard')}</span>
                           </>
                         )}
                       </Button>
@@ -826,9 +826,9 @@ const CreateCardSection: React.FC = () => {
                       <div className="flex items-start gap-2">
                         <span className="material-icons text-amber-500">info</span>
                         <div>
-                          <p className="text-amber-800 dark:text-amber-300 font-medium">Mode Test Actif</p>
+                          <p className="text-amber-800 dark:text-amber-300 font-medium">{t('create.testModeActive')}</p>
                           <p className="text-sm text-amber-700 dark:text-amber-400">
-                            Le wallet MetaMask est temporairement désactivé pour les tests. Utilisez le mode démo pour créer des cartes de test.
+                            {t('create.walletDisabledInfo')}
                           </p>
                         </div>
                       </div>

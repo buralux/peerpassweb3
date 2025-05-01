@@ -18,6 +18,7 @@ export const COLOR_SCHEMES: { id: ColorScheme; name: string; colors: string[] }[
   { id: "amber-red", name: "Amber Red", colors: ["from-amber-500", "to-red-500"] },
   { id: "purple-pink", name: "Purple Pink", colors: ["from-purple-600", "to-pink-500"] },
   { id: "gray-dark", name: "Gray Dark", colors: ["from-gray-700", "to-gray-900"] },
+  { id: "gold-black", name: "Gold Black", colors: ["from-yellow-600", "to-black"] },
 ];
 
 export const SOCIAL_PLATFORMS = [

@@ -27,6 +27,9 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   // Créer une URL pour le code QR qui pointe vers le profil
   const cardUrl = `${window.location.origin}/card/${card.id}`;
   
+  // Check if this is the Omari template
+  const isOmariTemplate = card.template === "omari";
+  
   const toggleCardSide = () => {
     setShowBack(!showBack);
   };
@@ -50,15 +53,28 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           
           {/* Card Header - Full width colored gradient background */}
           <div className={`${getGradientClass(card.colorScheme || "gold")} h-[40%] w-full relative`}>
-            {/* Add chip icon like credit card */}
-            <div className="absolute top-2 left-2 w-8 h-6 bg-yellow-400 bg-opacity-80 rounded-sm flex items-center justify-center">
-              <div className="w-6 h-4 border border-yellow-600 rounded-sm flex items-center justify-center">
-                <div className="w-4 h-2 border-b border-yellow-600"></div>
+            {/* Add chip icon like credit card (hide for Omari template) */}
+            {!isOmariTemplate && (
+              <div className="absolute top-2 left-2 w-8 h-6 bg-yellow-400 bg-opacity-80 rounded-sm flex items-center justify-center">
+                <div className="w-6 h-4 border border-yellow-600 rounded-sm flex items-center justify-center">
+                  <div className="w-4 h-2 border-b border-yellow-600"></div>
+                </div>
               </div>
-            </div>
+            )}
             
-            {/* Company logo in top center */}
-            {card.company && (
+            {/* Omari logo for Omari template */}
+            {isOmariTemplate && card.colorScheme === "gold-black" && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                <img 
+                  src="/logo-omari.svg" 
+                  alt="Omari Construction"
+                  className="h-12 w-auto" 
+                />
+              </div>
+            )}
+            
+            {/* Company logo in top center (only for non-Omari templates) */}
+            {card.company && !isOmariTemplate && (
               <div className="absolute top-3 right-12 text-white font-bold text-sm tracking-wider uppercase">
                 {card.company}
               </div>
@@ -67,31 +83,55 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           
           {/* Main card content area - Center aligned for elegant front design */}
           <div className="flex flex-col items-center justify-center text-center h-[60%] px-4">
-            {/* Avatar - Optionally positioned slightly above to overlap with gradient */}
-            <Avatar className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 mb-2 -mt-8 shadow-md">
-              <AvatarImage 
-                src={card.avatarUrl || DEFAULT_AVATAR_URL} 
-                alt={`${card.name}'s avatar`} 
-                className="w-full h-full object-cover"
-              />
-              <AvatarFallback className={`${getGradientClass(card.colorScheme || "gold")} text-white text-lg`}>
-                {card.name?.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            
-            {/* Name and Title - Elegant centered layout */}
-            <h3 className="font-bold text-gray-800 dark:text-white text-lg tracking-wide mt-1">
-              {card.name}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">
-              {card.jobTitle}
-            </p>
-            
-            {/* Simple contact row - Just website for clean front design */}
-            {card.website && (
-              <div className="mt-2 text-sm text-primary dark:text-primary/90 font-medium">
-                {card.website.replace(/^https?:\/\//, '')}
+            {isOmariTemplate ? (
+              /* Omari template has special styling */
+              <div className="flex flex-col items-center justify-center mt-4">
+                {/* Name and Title for Omari - Gold accent styling */}
+                <h3 className="font-bold text-black dark:text-yellow-500 text-lg tracking-wider uppercase mt-3">
+                  {card.name}
+                </h3>
+                <div className="w-12 h-0.5 bg-yellow-600 my-2"></div>
+                <p className="text-black dark:text-gray-300 text-sm font-medium">
+                  {card.jobTitle}
+                </p>
+                
+                {/* Simple contact row for Omari - Gold accent */}
+                {card.website && (
+                  <div className="mt-3 text-sm text-yellow-700 dark:text-yellow-500 font-medium">
+                    {card.website.replace(/^https?:\/\//, '')}
+                  </div>
+                )}
               </div>
+            ) : (
+              /* Standard template styling */
+              <>
+                {/* Avatar - Optionally positioned slightly above to overlap with gradient */}
+                <Avatar className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 mb-2 -mt-8 shadow-md">
+                  <AvatarImage 
+                    src={card.avatarUrl || DEFAULT_AVATAR_URL} 
+                    alt={`${card.name}'s avatar`} 
+                    className="w-full h-full object-cover"
+                  />
+                  <AvatarFallback className={`${getGradientClass(card.colorScheme || "gold")} text-white text-lg`}>
+                    {card.name?.substring(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                
+                {/* Name and Title - Elegant centered layout */}
+                <h3 className="font-bold text-gray-800 dark:text-white text-lg tracking-wide mt-1">
+                  {card.name}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">
+                  {card.jobTitle}
+                </p>
+                
+                {/* Simple contact row - Just website for clean front design */}
+                {card.website && (
+                  <div className="mt-2 text-sm text-primary dark:text-primary/90 font-medium">
+                    {card.website.replace(/^https?:\/\//, '')}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -101,35 +141,37 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
           
           {/* Company header - More subdued on back */}
           <div className={`${getGradientClass(card.colorScheme || "gold")} h-[20%] w-full flex items-center justify-center`}>
-            <h2 className="text-white font-bold text-lg">{card.company || "PeerPass"}</h2>
+            <h2 className="text-white font-bold text-lg">
+              {isOmariTemplate ? "OMARI CONSTRUCTION" : (card.company || "PeerPass")}
+            </h2>
           </div>
           
           <div className="h-[80%] p-3 flex justify-between">
             {/* Contact Information - Left aligned details */}
-            <div className="w-[65%] flex flex-col justify-center space-y-1.5 text-xs text-gray-700 dark:text-gray-300">
+            <div className={`${isOmariTemplate ? 'w-[60%]' : 'w-[65%]'} flex flex-col justify-center space-y-1.5 text-xs ${isOmariTemplate ? 'text-black dark:text-gray-200' : 'text-gray-700 dark:text-gray-300'}`}>
               {card.email && (
                 <div className="flex items-center">
-                  <span className="material-icons text-primary dark:text-primary/80 text-xs mr-1.5">mail</span>
+                  <span className={`material-icons text-xs mr-1.5 ${isOmariTemplate ? 'text-yellow-600 dark:text-yellow-500' : 'text-primary dark:text-primary/80'}`}>mail</span>
                   <span className="truncate">{card.email}</span>
                 </div>
               )}
               
               {card.phone && (
                 <div className="flex items-center">
-                  <span className="material-icons text-primary dark:text-primary/80 text-xs mr-1.5">phone</span>
+                  <span className={`material-icons text-xs mr-1.5 ${isOmariTemplate ? 'text-yellow-600 dark:text-yellow-500' : 'text-primary dark:text-primary/80'}`}>phone</span>
                   <span>{card.phone}</span>
                 </div>
               )}
               
               {card.website && (
                 <div className="flex items-center">
-                  <span className="material-icons text-primary dark:text-primary/80 text-xs mr-1.5">language</span>
+                  <span className={`material-icons text-xs mr-1.5 ${isOmariTemplate ? 'text-yellow-600 dark:text-yellow-500' : 'text-primary dark:text-primary/80'}`}>language</span>
                   <span className="truncate">{card.website}</span>
                 </div>
               )}
               
               {card.bio && (
-                <p className="text-gray-600 dark:text-gray-400 text-xs line-clamp-2 mt-1">
+                <p className={`text-xs line-clamp-2 mt-1 ${isOmariTemplate ? 'text-gray-800 dark:text-gray-300' : 'text-gray-600 dark:text-gray-400'}`}>
                   {String(card.bio)}
                 </p>
               )}
@@ -148,8 +190,12 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     else if (platform === "website") iconName = "language";
                     
                     return (
-                      <div key={platform} className="w-5 h-5 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                        <span className="material-icons text-primary dark:text-primary/80 text-[10px]">
+                      <div key={platform} className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                        isOmariTemplate ? 'bg-yellow-100 dark:bg-yellow-900/30' : 'bg-gray-100 dark:bg-gray-700'
+                      }`}>
+                        <span className={`material-icons text-[10px] ${
+                          isOmariTemplate ? 'text-yellow-600 dark:text-yellow-500' : 'text-primary dark:text-primary/80'
+                        }`}>
                           {iconName}
                         </span>
                       </div>
@@ -160,13 +206,13 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             </div>
             
             {/* QR Code - Right aligned */}
-            <div className="w-[35%] flex items-center justify-center">
-              <div className="bg-white p-1 rounded-lg">
+            <div className={`${isOmariTemplate ? 'w-[40%]' : 'w-[35%]'} flex items-center justify-center`}>
+              <div className={`${isOmariTemplate ? 'border-2 border-yellow-600 p-1.5' : 'p-1'} bg-white rounded-lg`}>
                 <QRCodeSVG 
                   value={cardUrl}
-                  size={80}
+                  size={isOmariTemplate ? 76 : 80}
                   level="M"
-                  fgColor="#000000"
+                  fgColor={isOmariTemplate ? "#DAA520" : "#000000"}
                   bgColor="#FFFFFF"
                 />
               </div>

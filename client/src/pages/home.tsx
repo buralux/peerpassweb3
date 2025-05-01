@@ -57,6 +57,30 @@ const DEMO_CARDS: BusinessCard[] = [
     isMinted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
+  },
+  {
+    id: 4,
+    owner: "0xDemoAddress1",
+    tokenId: "demo-token-4",
+    name: "Omar El Bahri",
+    jobTitle: "Directeur Général",
+    company: "Omari Construction",
+    email: "omar@omari-construction.com",
+    phone: "+33 7 89 01 23 45",
+    website: "https://omari-construction.com",
+    bio: "Plus de 20 ans d'expérience dans le secteur de la construction et des projets d'infrastructure. Spécialiste des projets d'envergure internationale.",
+    template: "omari",
+    colorScheme: "gold-black",
+    avatarUrl: null,
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/omar-el-bahri",
+      twitter: "https://twitter.com/omari_construct"
+    },
+    metadata: {},
+    ipfsHash: null,
+    isMinted: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   }
 ];
 
@@ -79,6 +103,29 @@ const DEMO_COLLECTED_CARDS: BusinessCard[] = [
     metadata: {},
     ipfsHash: null,
     isMinted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 5,
+    owner: "0xDemoAddress3",
+    tokenId: "demo-token-5",
+    name: "Ahmed Khaled",
+    jobTitle: "Chef de Projet Construction",
+    company: "Omari Construction",
+    email: "ahmed@omari-construction.com",
+    phone: "+33 6 55 66 77 88",
+    website: "https://omari-construction.com",
+    bio: "Expert en gestion de projets de construction résidentielle et commerciale.",
+    template: "omari",
+    colorScheme: "gold-black",
+    avatarUrl: null,
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/ahmed-khaled"
+    },
+    metadata: {},
+    ipfsHash: null,
+    isMinted: true,
     createdAt: new Date(),
     updatedAt: new Date(),
   }

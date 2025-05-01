@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { getGradientClass } from "@/lib/utils";
-import { BusinessCard as BusinessCardType, CardCustomization } from "@shared/schema";
+import { BusinessCard as BusinessCardType, CardCustomization, FontFamily } from "@shared/schema";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DEFAULT_AVATAR_URL } from "@/lib/constants";
 import { QRCodeSVG } from "qrcode.react";
@@ -37,14 +37,223 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   console.log(`Business Card - Template: ${card.template}, ColorScheme: ${card.colorScheme}`);
   console.log(`Template flags: Omari=${isOmariTemplate}, Professional=${isProfessionalTemplate}, Creative=${isCreativeTemplate}, Bold=${isBoldTemplate}, Modern=${isModernTemplate}`);
   
+  // Extraire et appliquer les personnalisations
+  const customization = useMemo(() => {
+    return card.customization || {};
+  }, [card.customization]);
+  
+  // Générer les styles de personnalisation
+  const customStyles = useMemo(() => {
+    const styles: React.CSSProperties = {};
+    
+    // Appliquer la famille de police si définie
+    if (customization.fontFamily) {
+      styles.fontFamily = getFontFamilyValue(customization.fontFamily);
+    }
+    
+    // Appliquer l'opacité si définie (0-100)
+    if (typeof customization.opacity === 'number') {
+      styles.opacity = customization.opacity / 100;
+    }
+    
+    // Appliquer le flou si défini (0-10)
+    if (typeof customization.blur === 'number' && customization.blur > 0) {
+      styles.filter = `blur(${customization.blur / 2}px)`;
+    }
+    
+    // Appliquer les couleurs personnalisées
+    if (customization.backgroundColor) {
+      styles.backgroundColor = customization.backgroundColor;
+    }
+    
+    // Appliquer les bordures
+    if (typeof customization.borderRadius === 'number') {
+      styles.borderRadius = `${customization.borderRadius}px`;
+    }
+    
+    if (typeof customization.borderWidth === 'number' && customization.borderWidth > 0) {
+      styles.borderWidth = `${customization.borderWidth}px`;
+      styles.borderStyle = 'solid';
+      
+      if (customization.borderColor) {
+        styles.borderColor = customization.borderColor;
+      }
+    }
+    
+    return styles;
+  }, [customization]);
+  
+  // Générer les styles pour le texte du nom
+  const nameStyles = useMemo(() => {
+    const styles: React.CSSProperties = {};
+    
+    if (customization.nameFontSize) {
+      styles.fontSize = customization.nameFontSize;
+    }
+    
+    if (customization.textColor) {
+      styles.color = customization.textColor;
+    }
+    
+    if (customization.fontWeight) {
+      styles.fontWeight = customization.fontWeight;
+    }
+    
+    // Positionnement personnalisé
+    if (customization.namePosition) {
+      styles.transform = `translate(${customization.namePosition.x}px, ${customization.namePosition.y}px)`;
+    }
+    
+    return styles;
+  }, [customization]);
+  
+  // Générer les styles pour le titre
+  const titleStyles = useMemo(() => {
+    const styles: React.CSSProperties = {};
+    
+    if (customization.titleFontSize) {
+      styles.fontSize = customization.titleFontSize;
+    }
+    
+    if (customization.textColor) {
+      styles.color = customization.textColor;
+    }
+    
+    // Positionnement personnalisé
+    if (customization.titlePosition) {
+      styles.transform = `translate(${customization.titlePosition.x}px, ${customization.titlePosition.y}px)`;
+    }
+    
+    return styles;
+  }, [customization]);
+  
+  // Générer les styles pour l'avatar
+  const avatarStyles = useMemo(() => {
+    const styles: React.CSSProperties = {};
+    
+    // Taille de l'avatar
+    if (customization.avatarSize) {
+      switch (customization.avatarSize) {
+        case 'small':
+          styles.width = '50px';
+          styles.height = '50px';
+          break;
+        case 'medium':
+          styles.width = '70px';
+          styles.height = '70px';
+          break;
+        case 'large':
+          styles.width = '90px';
+          styles.height = '90px';
+          break;
+      }
+    }
+    
+    // Bordure de l'avatar
+    if (typeof customization.avatarBorderWidth === 'number' && customization.avatarBorderWidth > 0) {
+      styles.borderWidth = `${customization.avatarBorderWidth}px`;
+      styles.borderStyle = 'solid';
+      
+      if (customization.borderColor) {
+        styles.borderColor = customization.borderColor;
+      } else {
+        styles.borderColor = 'rgba(255, 255, 255, 0.3)';
+      }
+    }
+    
+    // Positionnement personnalisé
+    if (customization.avatarPosition) {
+      styles.transform = `translate(${customization.avatarPosition.x}px, ${customization.avatarPosition.y}px)`;
+    }
+    
+    return styles;
+  }, [customization]);
+  
+  // Obtenir la valeur CSS pour une famille de police
+  function getFontFamilyValue(fontFamily: FontFamily): string {
+    switch (fontFamily) {
+      case 'sans-serif':
+        return 'ui-sans-serif, system-ui, sans-serif';
+      case 'serif':
+        return 'ui-serif, Georgia, Cambria, serif';
+      case 'monospace':
+        return 'ui-monospace, SFMono-Regular, Menlo, monospace';
+      case 'cursive':
+        return 'cursive';
+      case 'fantasy':
+        return 'fantasy';
+      case 'system-ui':
+        return 'system-ui';
+      case 'Inter':
+        return '"Inter", sans-serif';
+      case 'Poppins':
+        return '"Poppins", sans-serif';
+      case 'Playfair Display':
+        return '"Playfair Display", serif';
+      case 'Roboto Mono':
+        return '"Roboto Mono", monospace';
+      default:
+        return 'inherit';
+    }
+  }
+  
+  // Effet de lueur si activé
+  const containerClassNames = useMemo(() => {
+    let classes = "relative group mb-6";
+    
+    if (customization.glowEffect) {
+      classes += " glow-effect";
+    }
+    
+    return classes;
+  }, [customization.glowEffect]);
+  
+  // Effet d'ombre
+  const shadowClass = useMemo(() => {
+    if (!customization.shadowIntensity || customization.shadowIntensity === 'none') {
+      return '';
+    }
+    
+    switch (customization.shadowIntensity) {
+      case 'light':
+        return 'shadow-md';
+      case 'medium':
+        return 'shadow-lg';
+      case 'strong':
+        return 'shadow-xl';
+      default:
+        return '';
+    }
+  }, [customization.shadowIntensity]);
+  
+  // Alignement du contenu
+  const contentAlignmentClass = useMemo(() => {
+    if (!customization.contentAlignment) {
+      return 'text-center';
+    }
+    
+    switch (customization.contentAlignment) {
+      case 'left':
+        return 'text-left';
+      case 'center':
+        return 'text-center';
+      case 'right':
+        return 'text-right';
+      default:
+        return 'text-center';
+    }
+  }, [customization.contentAlignment]);
+  
   const flipCard = () => {
     setShowBack(!showBack);
   };
   
   return (
-    <div className="relative group mb-6">
+    <div className={containerClassNames}>
       {/* Glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+      {customization.glowEffect && (
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+      )}
       
       {/* Conteneur de carte avec aspect ratio 1.8/1 */}
       <div className="business-card">
@@ -111,7 +320,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
               <div className={`h-full rounded-xl overflow-hidden ${getGradientClass(card.colorScheme || "blue-violet")}`}>
                 {/* Professional template */}
                 {isProfessionalTemplate && (
-                  <div className="flex flex-col items-center justify-center h-full p-4 text-white">
+                  <div 
+                    className={`flex flex-col ${contentAlignmentClass} h-full p-4 text-white`}
+                    style={customStyles}
+                  >
                     <div className="w-full flex justify-end mb-2">
                       <div className="bg-white/20 px-2 py-0.5 rounded-full text-white text-xs font-bold">
                         NFT
@@ -119,27 +331,50 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     </div>
                     
                     {/* Avatar */}
-                    <Avatar className="w-16 h-16 rounded-full border-4 border-white/30 mb-3 shadow-md">
-                      <AvatarImage 
-                        src={card.avatarUrl || DEFAULT_AVATAR_URL} 
-                        alt={`${card.name}'s avatar`} 
-                        className="w-full h-full object-cover"
-                      />
-                      <AvatarFallback className="bg-white/20 text-white text-lg">
-                        {card.name?.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="flex justify-center">
+                      <Avatar 
+                        className={`rounded-full border-4 border-white/30 mb-3 ${shadowClass}`}
+                        style={avatarStyles}
+                      >
+                        <AvatarImage 
+                          src={card.avatarUrl || DEFAULT_AVATAR_URL} 
+                          alt={`${card.name}'s avatar`} 
+                          className="w-full h-full object-cover"
+                        />
+                        <AvatarFallback 
+                          className="bg-white/20 text-white text-lg"
+                          style={{ 
+                            backgroundColor: customization.primaryColor ? `${customization.primaryColor}20` : undefined,
+                            color: customization.textColor || 'white'
+                          }}
+                        >
+                          {card.name?.substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
                     
                     {/* Name and Title */}
-                    <h3 className="font-bold text-white text-xl tracking-wide mt-1 text-center">
+                    <h3 
+                      className={`font-bold text-white tracking-wide mt-1 ${contentAlignmentClass}`}
+                      style={nameStyles}
+                    >
                       {card.name}
                     </h3>
-                    <p className="text-white/80 text-sm font-medium mb-2 text-center">
+                    <p 
+                      className={`text-white/80 font-medium mb-2 ${contentAlignmentClass}`}
+                      style={titleStyles}
+                    >
                       {card.jobTitle}
                     </p>
                     
                     {/* Company */}
-                    <div className="text-white font-medium text-center bg-black/20 px-4 py-1 rounded-full">
+                    <div 
+                      className={`text-white font-medium ${contentAlignmentClass} mx-auto bg-black/20 px-4 py-1 rounded-full`}
+                      style={{ 
+                        backgroundColor: customization.secondaryColor ? `${customization.secondaryColor}20` : 'rgba(0,0,0,0.2)',
+                        color: customization.textColor || 'white'
+                      }}
+                    >
                       {card.company}
                     </div>
                   </div>

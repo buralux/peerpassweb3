@@ -56,6 +56,118 @@ export class MemStorage implements IStorage {
     this.cardIdCounter = 1;
     this.collectedCardIdCounter = 1;
     this.socialAccountIdCounter = 1;
+    
+    // Initialize demo data
+    this.initializeDemoData();
+  }
+  
+  // Initialize demo data for testing
+  private initializeDemoData() {
+    // Demo users
+    const demoUser1: User = {
+      id: this.userIdCounter++,
+      walletAddress: "0xDemoAddress1",
+      name: "Demo User",
+      email: "demo@example.com",
+      createdAt: new Date()
+    };
+    this.users.set(demoUser1.id, demoUser1);
+    this.userByWallet.set(demoUser1.walletAddress.toLowerCase(), demoUser1);
+    
+    // Demo cards
+    const azizCard: BusinessCard = {
+      id: 2,
+      owner: "0xDemoAddress1",
+      tokenId: "demo-token-2",
+      name: "AZIZ LAGHZAOUI",
+      jobTitle: "Chairman",
+      company: "Concept4.crypto",
+      email: "aziz.laghzaoui@concept4.crypto",
+      phone: "+212 687654321",
+      website: "concept4.crypto",
+      bio: "Leader dans l'innovation blockchain et la finance décentralisée. Pionnier des solutions crypto pour les entreprises.",
+      template: "modern",
+      colorScheme: "purple-pink",
+      avatarUrl: null,
+      socialLinks: {
+        twitter: "https://twitter.com/azizlaghzaoui",
+        linkedin: "https://linkedin.com/in/azizlaghzaoui"
+      },
+      metadata: {},
+      customization: {},
+      ipfsHash: null,
+      isMinted: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    
+    const aliCard: BusinessCard = {
+      id: 1,
+      owner: "0xDemoAddress1",
+      tokenId: "demo-token-1",
+      name: "ALI HAMAYET",
+      jobTitle: "Blockchain Expert",
+      company: "BChain Solutions",
+      email: "ali.hamayet@bchain.com",
+      phone: "+212 612345678",
+      website: "bchain.solutions",
+      bio: "Expert en blockchain et technologies Web3 avec plus de 8 ans d'expérience. Spécialisé dans l'implémentation de solutions décentralisées.",
+      template: "professional",
+      colorScheme: "blue-violet",
+      avatarUrl: null,
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/ali-hamayet",
+        twitter: "https://twitter.com/alihamayet"
+      },
+      metadata: {},
+      customization: {},
+      ipfsHash: null,
+      isMinted: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    
+    const mohamedCard: BusinessCard = {
+      id: 4,
+      owner: "0xDemoAddress1",
+      tokenId: "demo-token-4",
+      name: "MOHAMED AZIZI",
+      jobTitle: "PURCHASE MANAGER",
+      company: "Omari Construction",
+      email: "mohamed@omari-construction.ma",
+      phone: "+212 661 23 45 67",
+      website: "https://omari-construction.ma",
+      bio: "Responsable des achats et de l'approvisionnement avec plus de 15 ans d'expérience dans le secteur de la construction.",
+      template: "omari",
+      colorScheme: "gold-black",
+      avatarUrl: null,
+      socialLinks: {
+        linkedin: "https://linkedin.com/in/mohamed-azizi",
+        twitter: "https://twitter.com/omari_construction"
+      },
+      metadata: {},
+      customization: {
+        fontFamily: 'Poppins',
+        fontWeight: 'bold'
+      },
+      ipfsHash: null,
+      isMinted: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    
+    // Add cards to storage
+    this.businessCards.set(azizCard.id, azizCard);
+    this.businessCardByToken.set(azizCard.tokenId, azizCard);
+    
+    this.businessCards.set(aliCard.id, aliCard);
+    this.businessCardByToken.set(aliCard.tokenId, aliCard);
+    
+    this.businessCards.set(mohamedCard.id, mohamedCard);
+    this.businessCardByToken.set(mohamedCard.tokenId, mohamedCard);
+    
+    // Update counters
+    this.cardIdCounter = 5; // After the highest ID
   }
 
   // User operations

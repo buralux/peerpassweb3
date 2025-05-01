@@ -97,25 +97,25 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-purple-600"></div>
               <div>
-                <h3 className="font-bold text-xl text-gray-800 dark:text-white">Marie Dupont</h3>
-                <p className="text-gray-600 dark:text-gray-400">UX Designer</p>
+                <h3 className="font-bold text-xl text-gray-800 dark:text-white">AZIZ LAGHZAOUI</h3>
+                <p className="text-gray-600 dark:text-gray-400">Chairman</p>
               </div>
             </div>
             
             <div className="space-y-2 flex-1">
-              <p className="text-gray-700 dark:text-gray-300 font-medium">DesignStudio</p>
+              <p className="text-gray-700 dark:text-gray-300 font-medium">Concept4.crypto</p>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Créative UX/UI designer spécialisée dans les applications mobiles.
+                Leader dans l'innovation blockchain et la finance décentralisée.
               </p>
               
               <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm mt-3">
                 <span className="material-icons text-sm mr-2">mail</span>
-                <span>marie@example.com</span>
+                <span>aziz.laghzaoui@concept4.crypto</span>
               </div>
               
               <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
                 <span className="material-icons text-sm mr-2">phone</span>
-                <span>+33 6 98 76 54 32</span>
+                <span>+212 687654321</span>
               </div>
             </div>
             

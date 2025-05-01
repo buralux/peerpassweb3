@@ -4,6 +4,8 @@ import { useTheme } from "@/hooks/use-theme";
 import { Link } from "wouter";
 import { formatWalletAddress } from "@/lib/utils";
 import peerpassLogo from "../assets/peerpass-logo.png";
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from "./LanguageSelector";
 
 interface TopAppBarProps {
   isConnected: boolean;
@@ -19,6 +21,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
   onDisconnect 
 }) => {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
   
   return (
     <header className="bg-white dark:bg-darkSurface shadow-sm sticky top-0 z-50">
@@ -39,6 +42,8 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
         </div>
         
         <div className="flex items-center space-x-2">
+          <LanguageSelector />
+          
           <button 
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" 
             aria-label="Toggle theme"

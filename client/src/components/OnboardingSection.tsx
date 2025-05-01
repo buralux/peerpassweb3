@@ -1,5 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "./LanguageSelector";
 
 interface OnboardingSectionProps {
   onConnect: () => void;
@@ -8,16 +10,23 @@ interface OnboardingSectionProps {
 }
 
 const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLearnMore, onDemoMode }) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-[calc(100vh-160px)] flex flex-col md:flex-row gap-8 md:gap-16 items-center py-12 px-6">
       {/* Left Content - Hero Text */}
       <div className="flex-1 max-w-2xl">
+        {/* Language Selector */}
+        <div className="mb-8">
+          <LanguageSelector variant="prominent" className="mb-4" />
+        </div>
+      
         <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-6">
-          Votre identité professionnelle en NFT
+          {t('onboarding.welcome')}
         </h1>
         
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-          PeerPass transforme vos cartes de visite traditionnelles en NFTs vérifiables, portables et personnalisables sur la blockchain BNB Chain.
+          {t('app.slogan')}
         </p>
         
         <div className="flex flex-wrap gap-4 mb-8">
@@ -25,21 +34,21 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
             <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
               <span className="material-icons text-primary">verified</span>
             </div>
-            <span className="text-gray-700 dark:text-gray-300">Identité vérifiable</span>
+            <span className="text-gray-700 dark:text-gray-300">{t('onboarding.step1Title')}</span>
           </div>
           
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
               <span className="material-icons text-green-600">sync</span>
             </div>
-            <span className="text-gray-700 dark:text-gray-300">Portable partout</span>
+            <span className="text-gray-700 dark:text-gray-300">{t('onboarding.step2Title')}</span>
           </div>
           
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
               <span className="material-icons text-amber-600">palette</span>
             </div>
-            <span className="text-gray-700 dark:text-gray-300">Entièrement personnalisable</span>
+            <span className="text-gray-700 dark:text-gray-300">{t('onboarding.step3Title')}</span>
           </div>
         </div>
         
@@ -50,7 +59,7 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
             className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium rounded-lg"
           >
             <span className="material-icons">account_balance_wallet</span>
-            <span>Connecter Wallet</span>
+            <span>{t('onboarding.connectWallet')}</span>
           </Button>
           
           {onDemoMode && (
@@ -60,7 +69,7 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
               className="flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-orange-500 hover:opacity-90 text-white font-medium rounded-lg"
             >
               <span className="material-icons">visibility</span>
-              <span>Mode Démo</span>
+              <span>{t('onboarding.demoMode')}</span>
             </Button>
           )}
           
@@ -71,7 +80,7 @@ const OnboardingSection: React.FC<OnboardingSectionProps> = ({ onConnect, onLear
             className="flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium rounded-lg"
           >
             <span className="material-icons">info</span>
-            <span>En savoir plus</span>
+            <span>{t('home.learnMore')}</span>
           </Button>
         </div>
       </div>

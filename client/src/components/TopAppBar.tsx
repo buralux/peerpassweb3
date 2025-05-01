@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { formatWalletAddress } from "@/lib/utils";
 import peerpassLogo from "../assets/peerpass-logo.png";
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
+  const [, navigate] = useLocation();
   
   return (
     <header className="bg-white dark:bg-darkSurface shadow-sm sticky top-0 z-50">
@@ -30,15 +31,16 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
           <button className="md:hidden mr-4" aria-label="Open menu">
             <span className="material-icons text-gray-700 dark:text-gray-300">menu</span>
           </button>
-          <Link href="/">
-            <div className="flex items-center cursor-pointer">
-              <img 
-                src={peerpassLogo} 
-                alt="PeerPass Logo" 
-                className="h-12 mr-2 filter drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 ease-in-out" 
-              />
-            </div>
-          </Link>
+          <div 
+            className="flex items-center cursor-pointer" 
+            onClick={() => navigate('/')}
+          >
+            <img 
+              src={peerpassLogo} 
+              alt="PeerPass Logo" 
+              className="h-12 mr-2 filter drop-shadow-lg hover:drop-shadow-xl transition-all duration-300 ease-in-out" 
+            />
+          </div>
         </div>
         
         <div className="flex items-center space-x-2">

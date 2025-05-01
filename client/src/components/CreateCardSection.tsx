@@ -109,10 +109,17 @@ const CreateCardSection: React.FC = () => {
   // Template selection
   const [selectedTemplate, setSelectedTemplate] = useState(CARD_TEMPLATES[0].id);
   const handleTemplateChange = (templateId: string) => {
+    console.log(`Template change: selectedTemplate=${templateId}`);
+    // Utiliser un cast pour garantir la compatibilité des types
     setSelectedTemplate(templateId as any);
     form.setValue("template", templateId as any);
     // Force refresh de l'aperçu
     setForceRefresh(prev => !prev);
+    
+    // Debug après changement
+    setTimeout(() => {
+      console.log(`After template change: previewCard.template=${previewCard.template}, selectedTemplate=${selectedTemplate}`);
+    }, 100);
   };
   
   // Color scheme selection
@@ -246,6 +253,7 @@ const CreateCardSection: React.FC = () => {
                 {/* Utiliser le composant CardPreview qui gère sa propre mise à jour */}
                 <div className="md:hidden mb-4">
                   <CardPreview 
+                    key={`mobile-preview-${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`}
                     card={previewCard}
                     templateId={selectedTemplate}
                     colorSchemeId={selectedColorScheme}
@@ -353,6 +361,7 @@ const CreateCardSection: React.FC = () => {
                   {/* Aperçu de la carte en temps réel - avec 'position: sticky' sur desktop uniquement */}
                   <div className="hidden md:block sticky top-4">
                     <CardPreview 
+                      key={`desktop-preview-${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`}
                       card={previewCard}
                       templateId={selectedTemplate}
                       colorSchemeId={selectedColorScheme}
@@ -727,6 +736,7 @@ const CreateCardSection: React.FC = () => {
                   
                   <div className="mx-auto max-w-sm">
                     <CardPreview 
+                      key={`final-preview-${selectedTemplate}-${selectedColorScheme}-${forceRefresh}`}
                       card={previewCard}
                       templateId={selectedTemplate}
                       colorSchemeId={selectedColorScheme}

@@ -33,6 +33,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   const isBoldTemplate = card.template === "bold";
   const isModernTemplate = card.template === "modern";
   
+  // Debugging template and color scheme
+  console.log(`Business Card - Template: ${card.template}, ColorScheme: ${card.colorScheme}`);
+  console.log(`Template flags: Omari=${isOmariTemplate}, Professional=${isProfessionalTemplate}, Creative=${isCreativeTemplate}, Bold=${isBoldTemplate}, Modern=${isModernTemplate}`);
+  
   const flipCard = () => {
     setShowBack(!showBack);
   };

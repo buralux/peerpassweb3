@@ -30,7 +30,11 @@ const TopAppBar: React.FC<TopAppBarProps> = ({
           <button className="md:hidden mr-4" aria-label="Open menu">
             <span className="material-icons text-gray-700 dark:text-gray-300">menu</span>
           </button>
-          <Link href="/">
+          <Link href="/" onClick={(e) => {
+              // Pour s'assurer que le lien fonctionne même en cas de problème avec wouter
+              e.preventDefault();
+              window.location.href = '/';
+            }}>
             <div className="flex items-center cursor-pointer">
               <img 
                 src={peerpassLogo} 

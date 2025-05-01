@@ -31,6 +31,8 @@ export const businessCards = pgTable("business_cards", {
   colorScheme: text("color_scheme").notNull(),
   avatarUrl: text("avatar_url"),
   socialLinks: jsonb("social_links").notNull().default({}),
+  // Advanced customization options
+  customization: jsonb("customization").notNull().default({}),
   metadata: jsonb("metadata").notNull().default({}),
   ipfsHash: text("ipfs_hash"),
   isMinted: boolean("is_minted").notNull().default(false),
@@ -110,6 +112,96 @@ export type InsertSocialAccount = z.infer<typeof insertSocialAccountSchema>;
 
 export type CardTemplate = typeof cardTemplates[number];
 export type ColorScheme = typeof colorSchemes[number];
+
+// Font options
+export const fontFamilies = [
+  "system-ui", // Default system font
+  "serif",     // Serif font
+  "sans-serif", // Sans-serif font
+  "monospace",  // Monospace font
+  "cursive",    // Cursive font
+  "fantasy",    // Fantasy font
+  "Inter",      // Modern sans-serif
+  "Poppins",    // Professional sans-serif
+  "Playfair Display", // Elegant serif
+  "Roboto Mono",     // Clean monospace
+] as const;
+
+export type FontFamily = typeof fontFamilies[number];
+
+// Advanced customization types
+export interface CardCustomization {
+  // Typography
+  fontFamily?: FontFamily;
+  nameFontSize?: string;
+  titleFontSize?: string;
+  textFontSize?: string;
+  fontWeight?: 'normal' | 'medium' | 'semibold' | 'bold';
+  
+  // Layout 
+  avatarSize?: 'small' | 'medium' | 'large';
+  avatarBorderWidth?: number;
+  contentAlignment?: 'left' | 'center' | 'right';
+  
+  // Effects
+  opacity?: number;  // 0-100
+  blur?: number;     // 0-10
+  shadowIntensity?: 'none' | 'light' | 'medium' | 'strong';
+  glowEffect?: boolean;
+  
+  // Shapes and borders
+  borderRadius?: number; // 0-20
+  borderWidth?: number;  // 0-5
+  borderColor?: string;  // CSS color
+  
+  // Custom colors
+  primaryColor?: string;
+  secondaryColor?: string;
+  textColor?: string;
+  backgroundColor?: string;
+  
+  // Custom positioning
+  namePosition?: { x: number, y: number };
+  titlePosition?: { x: number, y: number };
+  avatarPosition?: { x: number, y: number };
+}
+
+// Not requiring customization to be mandatory
+export type CardCustomization = Partial<{
+  // Typography
+  fontFamily: FontFamily;
+  nameFontSize: string;
+  titleFontSize: string;
+  textFontSize: string;
+  fontWeight: 'normal' | 'medium' | 'semibold' | 'bold';
+  
+  // Layout 
+  avatarSize: 'small' | 'medium' | 'large';
+  avatarBorderWidth: number;
+  contentAlignment: 'left' | 'center' | 'right';
+  
+  // Effects
+  opacity: number;  // 0-100
+  blur: number;     // 0-10
+  shadowIntensity: 'none' | 'light' | 'medium' | 'strong';
+  glowEffect: boolean;
+  
+  // Shapes and borders
+  borderRadius: number; // 0-20
+  borderWidth: number;  // 0-5
+  borderColor: string;  // CSS color
+  
+  // Custom colors
+  primaryColor: string;
+  secondaryColor: string;
+  textColor: string;
+  backgroundColor: string;
+  
+  // Custom positioning
+  namePosition: { x: number, y: number };
+  titlePosition: { x: number, y: number };
+  avatarPosition: { x: number, y: number };
+}>;
 
 // Extended validation schema for business card creation
 export const createBusinessCardSchema = insertBusinessCardSchema.extend({

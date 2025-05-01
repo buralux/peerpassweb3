@@ -66,9 +66,9 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             {isOmariTemplate && card.colorScheme === "gold-black" && (
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                 <img 
-                  src="/logo-omari.svg" 
+                  src="logo-omari.svg" 
                   alt="Omari Construction"
-                  className="h-12 w-auto" 
+                  className="h-16 w-auto" 
                 />
               </div>
             )}

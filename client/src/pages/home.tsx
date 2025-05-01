@@ -17,30 +17,6 @@ import { useTranslation } from "react-i18next";
 // Exemples de cartes de visite pour le mode démo
 const DEMO_CARDS: BusinessCard[] = [
   {
-    id: 1,
-    owner: "0xDemoAddress1",
-    tokenId: "demo-token-1",
-    name: "ALI HAMAYET",
-    jobTitle: "Blockchain Expert",
-    company: "BChain Solutions",
-    email: "ali.hamayet@bchain.com",
-    phone: "+212 612345678",
-    website: "bchain.solutions",
-    bio: "Expert en blockchain et technologies Web3 avec plus de 8 ans d'expérience. Spécialisé dans l'implémentation de solutions décentralisées.",
-    template: "professional",
-    colorScheme: "blue-violet",
-    avatarUrl: null,
-    socialLinks: {
-      linkedin: "https://linkedin.com/in/ali-hamayet",
-      twitter: "https://twitter.com/alihamayet"
-    },
-    metadata: {},
-    ipfsHash: null,
-    isMinted: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
     id: 2,
     owner: "0xDemoAddress1",
     tokenId: "demo-token-2",
@@ -57,6 +33,30 @@ const DEMO_CARDS: BusinessCard[] = [
     socialLinks: {
       twitter: "https://twitter.com/azizlaghzaoui",
       linkedin: "https://linkedin.com/in/azizlaghzaoui"
+    },
+    metadata: {},
+    ipfsHash: null,
+    isMinted: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 1,
+    owner: "0xDemoAddress1",
+    tokenId: "demo-token-1",
+    name: "ALI HAMAYET",
+    jobTitle: "Blockchain Expert",
+    company: "BChain Solutions",
+    email: "ali.hamayet@bchain.com",
+    phone: "+212 612345678",
+    website: "bchain.solutions",
+    bio: "Expert en blockchain et technologies Web3 avec plus de 8 ans d'expérience. Spécialisé dans l'implémentation de solutions décentralisées.",
+    template: "professional",
+    colorScheme: "blue-violet",
+    avatarUrl: null,
+    socialLinks: {
+      linkedin: "https://linkedin.com/in/ali-hamayet",
+      twitter: "https://twitter.com/alihamayet"
     },
     metadata: {},
     ipfsHash: null,

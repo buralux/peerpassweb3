@@ -18,8 +18,8 @@ interface Language {
 
 // Définition des langues disponibles
 const languages: Language[] = [
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'ar', name: 'العربية', flag: '🇸🇦', dir: 'rtl' }
 ];
 
@@ -51,35 +51,47 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   if (variant === 'prominent') {
     return (
       <div className={`flex flex-col gap-4 ${className}`}>
-        <h3 className="text-lg font-medium text-center mb-2">{t('common.language')}</h3>
-        <div className="flex gap-3 justify-center">
-          {languages.map((lang) => (
-            <Button
-              key={lang.code}
-              variant={lang.code === i18n.language ? 'default' : 'outline'}
-              className={`flex items-center gap-2 ${lang.code === i18n.language ? 'bg-primary text-primary-foreground' : ''}`}
-              onClick={() => changeLanguage(lang.code)}
-            >
-              <span className="text-xl">{lang.flag}</span>
-              <span>{lang.name}</span>
-            </Button>
-          ))}
+        <div className="flex justify-center mb-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2 rounded-full hover:bg-primary/10 transition-all duration-300"
+              >
+                <span className="material-icons">language</span>
+                <span className="text-sm font-medium">{t('common.language')}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center">
+              {languages.map((lang) => (
+                <DropdownMenuItem
+                  key={lang.code}
+                  className={`flex items-center gap-2 ${lang.code === i18n.language ? 'bg-muted' : ''}`}
+                  onClick={() => changeLanguage(lang.code)}
+                >
+                  <span className="text-xl">{lang.flag}</span>
+                  <span>{lang.name}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     );
   }
 
-  // Rendu pour la version compacte (menu standard)
+  // Rendu pour la version compacte (menu standard) - juste l'icône
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          size="sm" 
-          className={`flex items-center gap-2 px-2 ${className}`}
+          size="icon" 
+          className={`rounded-full p-2 hover:bg-primary/10 ${className}`}
+          title={t('common.language')}
         >
-          <span className="text-xl">{currentLanguage.flag}</span>
-          <span className="hidden sm:inline">{currentLanguage.name}</span>
+          <span className="material-icons">language</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

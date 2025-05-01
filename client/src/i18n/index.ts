@@ -32,12 +32,12 @@ i18n
   .init({
     debug: true,
     resources,
-    fallbackLng: 'fr', // Langue par défaut si la traduction n'existe pas
+    fallbackLng: 'en', // Langue par défaut si la traduction n'existe pas
     interpolation: {
       escapeValue: false, // React échappe déjà les valeurs
     },
-    // Langue de démarrage
-    lng: window.navigator.language || 'fr',
+    // Langue de démarrage - défaut à l'anglais
+    lng: 'en',
   });
 
 export default i18n;

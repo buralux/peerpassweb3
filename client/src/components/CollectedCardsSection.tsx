@@ -38,7 +38,7 @@ const CollectedCardsSection: React.FC<CollectedCardsSectionProps> = ({
       </div>
       
       {cards.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {cards.map((card) => (
             <div key={card.id} className="block">
               <BusinessCard 

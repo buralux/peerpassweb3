@@ -537,7 +537,7 @@ const CreateCardSection: React.FC = () => {
                     className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
                   >
                     <span className="material-icons mr-2">arrow_back</span>
-                    Previous
+                    {t("common.prevStep")}
                   </Button>
                   
                   <Button
@@ -545,7 +545,7 @@ const CreateCardSection: React.FC = () => {
                     onClick={goToNextStep}
                     className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center"
                   >
-                    Next Step
+                    {t("common.nextStep")}
                     <span className="material-icons ml-2">arrow_forward</span>
                   </Button>
                 </div>
@@ -703,7 +703,7 @@ const CreateCardSection: React.FC = () => {
                     className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
                   >
                     <span className="material-icons mr-2">arrow_back</span>
-                    Previous
+                    {t("common.prevStep")}
                   </Button>
                   
                   <Button
@@ -711,7 +711,7 @@ const CreateCardSection: React.FC = () => {
                     onClick={goToNextStep}
                     className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 text-white font-medium py-2 px-6 rounded-lg flex items-center"
                   >
-                    Next Step
+                    {t("common.nextStep")}
                     <span className="material-icons ml-2">arrow_forward</span>
                   </Button>
                 </div>
@@ -774,7 +774,7 @@ const CreateCardSection: React.FC = () => {
                       className="border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2 px-6 rounded-lg flex items-center"
                     >
                       <span className="material-icons mr-2">arrow_back</span>
-                      Previous
+                      {t("common.prevStep")}
                     </Button>
                     
                     <div className="flex flex-col md:flex-row gap-3">

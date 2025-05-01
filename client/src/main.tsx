@@ -8,6 +8,9 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { ThemeProvider } from "./providers/ThemeProvider";
 
+// Import i18n configuration
+import "./i18n";
+
 // Import material icons
 const linkElement = document.createElement("link");
 linkElement.rel = "stylesheet";

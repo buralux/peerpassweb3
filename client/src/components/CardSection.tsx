@@ -43,14 +43,18 @@ const CardSection: React.FC<CardSectionProps> = ({
       {cards.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <Link key={card.id} href={`/card/${card.id}`}>
-              <a className="block cursor-pointer">
-                <BusinessCard 
-                  card={card} 
-                  onShare={onShare ? () => onShare(card) : undefined}
-                />
-              </a>
-            </Link>
+            <div key={card.id} className="card-wrapper">
+              <BusinessCard 
+                card={card} 
+                onShare={onShare ? () => onShare(card) : undefined}
+              />
+              <Link href={`/card/${card.id}`} className="absolute bottom-4 right-4 z-20">
+                <Button variant="secondary" size="sm" className="text-xs flex items-center gap-1">
+                  <span className="material-icons text-xs">visibility</span>
+                  {t('cards.viewDetails')}
+                </Button>
+              </Link>
+            </div>
           ))}
         </div>
       ) : (

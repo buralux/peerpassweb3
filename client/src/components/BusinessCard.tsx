@@ -30,7 +30,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
   // Check if this is the Omari template
   const isOmariTemplate = card.template === "omari";
   
-  const toggleCardSide = () => {
+  const toggleCardSide = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Empêcher la navigation et autres comportements par défaut
+    e.preventDefault();
+    e.stopPropagation();
     setShowBack(!showBack);
   };
   

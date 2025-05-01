@@ -223,6 +223,9 @@ const HomePage: React.FC = () => {
   const displayedCollectedCards = demoMode ? DEMO_COLLECTED_CARDS : collectedCards;
   const displayAddress = demoMode ? "0xDemo...1234" : (wallet?.address ? formatWalletAddress(wallet.address) : "");
   
+  console.log("Demo mode:", demoMode);
+  console.log("Displayed cards:", displayedCards.map(card => card.name));
+  
   return (
     <>
       {demoMode && (

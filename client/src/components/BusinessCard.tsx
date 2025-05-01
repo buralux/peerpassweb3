@@ -65,11 +65,32 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             {/* Omari logo for Omari template */}
             {isOmariTemplate && card.colorScheme === "gold-black" && (
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                <img 
-                  src="logo-omari.svg" 
-                  alt="Omari Construction"
-                  className="h-16 w-auto" 
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="70" viewBox="0 0 400 100" className="h-16 w-auto">
+                  <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{stopColor:"#B8860B",stopOpacity:1}} />
+                      <stop offset="50%" style={{stopColor:"#DAA520",stopOpacity:1}} />
+                      <stop offset="100%" style={{stopColor:"#FFD700",stopOpacity:1}} />
+                    </linearGradient>
+                  </defs>
+                  
+                  <rect width="400" height="100" fill="#000" />
+                  
+                  <g transform="translate(65, 30) scale(0.6)">
+                    <path d="M10,60 L30,10 L60,10 L80,60 Z" stroke="url(#goldGradient)" strokeWidth="2" fill="none" />
+                    <path d="M25,60 L25,30" stroke="url(#goldGradient)" strokeWidth="3" fill="none" />
+                    <path d="M40,60 L40,20" stroke="url(#goldGradient)" strokeWidth="3" fill="none" />
+                    <path d="M55,60 L55,20" stroke="url(#goldGradient)" strokeWidth="3" fill="none" />
+                    <path d="M70,60 L70,30" stroke="url(#goldGradient)" strokeWidth="3" fill="none" />
+                    <path d="M20,15 L45,5 L70,15" stroke="url(#goldGradient)" strokeWidth="3" fill="none" />
+                  </g>
+                  
+                  <text x="140" y="55" fontFamily="Arial, sans-serif" fontSize="36" fontWeight="bold" fill="#DAA520" letterSpacing="2">OMARI</text>
+                  
+                  <line x1="140" y1="60" x2="350" y2="60" stroke="#DAA520" strokeWidth="2" />
+                  
+                  <text x="150" y="80" fontFamily="Arial, sans-serif" fontSize="16" fill="#DAA520" letterSpacing="1">CONSTRUCTION GROUP</text>
+                </svg>
               </div>
             )}
             

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="100" viewBox="0 0 400 100">
+  <rect width="400" height="100" fill="#000" />
+  <circle cx="80" cy="50" r="35" stroke="#DAA520" stroke-width="3" fill="#000" />
+  <path d="M60,60 L75,40 L80,35 L85,40 L100,60" stroke="#DAA520" stroke-width="2" fill="none" />
+  <path d="M65,60 L70,50 L75,60" stroke="#DAA520" stroke-width="2" fill="none" />
+  <path d="M85,60 L90,50 L95,60" stroke="#DAA520" stroke-width="2" fill="none" />
+  <text x="140" y="55" font-family="Arial" font-size="36" font-weight="bold" fill="#DAA520">OMARI</text>
+  <text x="160" y="75" font-family="Arial" font-size="14" fill="#DAA520">CONSTRUCTION GROUP</text>
+</svg>

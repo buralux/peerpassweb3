@@ -462,6 +462,7 @@ const CreateCardSection: React.FC = () => {
                                 placeholder="Your company name" 
                                 className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
                                 {...field} 
+                                value={field.value || ''}
                               />
                             </div>
                           </FormControl>
@@ -486,6 +487,7 @@ const CreateCardSection: React.FC = () => {
                                 rows={3}
                                 className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg resize-none" 
                                 {...field} 
+                                value={field.value || ''}
                               />
                             </div>
                           </FormControl>
@@ -639,6 +641,7 @@ const CreateCardSection: React.FC = () => {
                                 placeholder="https://yourwebsite.com" 
                                 className="pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg" 
                                 {...field} 
+                                value={field.value || ''}
                               />
                             </div>
                           </FormControl>

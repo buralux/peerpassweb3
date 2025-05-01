@@ -556,8 +556,8 @@ const CreateCardSection: React.FC = () => {
             {currentStep === 'social' && (
               <div className="space-y-6">
                 <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Profile Image & Website</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">Add your professional image and website.</p>
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.socialInfo.title')}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.socialInfo.subtitle')}</p>
                   
                   <div className="space-y-6">
                     <FormField
@@ -565,7 +565,7 @@ const CreateCardSection: React.FC = () => {
                       name="avatarUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">Avatar URL</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.socialInfo.avatarUrl')}</FormLabel>
                           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
                             <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-gray-800 shadow-md flex-shrink-0">
                               {field.value ? (
@@ -598,7 +598,7 @@ const CreateCardSection: React.FC = () => {
                                 </div>
                               </FormControl>
                               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                Enter a URL to your profile image. For best results, use a square image.
+                                {t('create.socialInfo.avatarHelp')}
                               </p>
                             </div>
                           </div>
@@ -612,7 +612,7 @@ const CreateCardSection: React.FC = () => {
                       name="website"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">Website</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.socialInfo.website')}</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -633,8 +633,8 @@ const CreateCardSection: React.FC = () => {
                 </div>
                 
                 <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Social Networks</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">Connect your professional social media accounts.</p>
+                  <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.socialNetworks.title')}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.socialNetworks.subtitle')}</p>
                   
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {SOCIAL_PLATFORMS.map((platform) => {
@@ -680,7 +680,7 @@ const CreateCardSection: React.FC = () => {
                           </p>
                           
                           <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">
-                            {isConnected ? 'Connected' : 'Not Connected'}
+                            {isConnected ? t('create.socialNetworks.connected') : t('create.socialNetworks.notConnected')}
                           </p>
                           
                           {isConnected && (

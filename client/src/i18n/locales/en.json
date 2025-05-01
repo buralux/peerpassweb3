@@ -116,6 +116,24 @@
       "email": "Email",
       "phone": "Phone"
     },
+    "socialInfo": {
+      "title": "Profile Image & Website",
+      "subtitle": "Add your professional image and website.",
+      "avatarUrl": "Avatar URL",
+      "avatarHelp": "Enter a URL to your profile image. For best results, use a square image.",
+      "website": "Website"
+    },
+    "socialNetworks": {
+      "title": "Social Networks",
+      "subtitle": "Connect your professional social media accounts.",
+      "connected": "Connected",
+      "notConnected": "Not Connected",
+      "added": "Added"
+    },
+    "preview": {
+      "title": "Preview Your Card",
+      "subtitle": "This is how your NFT business card will look."
+    },
     "fullName": "Full Name",
     "jobTitle": "Job Title",
     "company": "Company",

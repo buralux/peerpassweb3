@@ -255,8 +255,8 @@ const CreateCardSection: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6">
-                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Choose a Template</h3>
-                      <p className="text-gray-600 dark:text-gray-400 mb-6">Select a template style for your NFT business card.</p>
+                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.selectTemplate')}</h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.selectTemplateDesc')}</p>
                       
                       <div className="grid grid-cols-2 gap-4">
                         {CARD_TEMPLATES.map((template) => (
@@ -319,8 +319,8 @@ const CreateCardSection: React.FC = () => {
                     </div>
                     
                     <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 mt-6">
-                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">Pick a Color Scheme</h3>
-                      <p className="text-gray-600 dark:text-gray-400 mb-6">Set the color palette for your NFT business card.</p>
+                      <h3 className="font-medium text-xl text-gray-800 dark:text-white mb-4">{t('create.selectColorScheme')}</h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-6">{t('create.selectColorDesc')}</p>
                       
                       <div className="grid grid-cols-2 gap-4">
                         {COLOR_SCHEMES.map((scheme) => (

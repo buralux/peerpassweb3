@@ -13,6 +13,8 @@
     "connect": "Connect",
     "disconnect": "Disconnect",
     "loading": "Loading...",
+    "nextStep": "Next Step",
+    "prevStep": "Previous",
     "search": "Search...",
     "emptyState": "No items found",
     "error": "An error occurred",

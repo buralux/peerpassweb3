@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 const BottomNavigation: React.FC = () => {
   const [location] = useLocation();

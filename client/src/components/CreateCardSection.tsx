@@ -435,7 +435,7 @@ const CreateCardSection: React.FC = () => {
                       name="company"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">Company</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.company')}</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -458,7 +458,7 @@ const CreateCardSection: React.FC = () => {
                       name="bio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">Bio</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.bio')}</FormLabel>
                           <FormControl>
                             <div className="relative">
                               <span className="absolute left-3 top-3 text-gray-400">
@@ -483,7 +483,7 @@ const CreateCardSection: React.FC = () => {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-gray-700 dark:text-gray-300">Email</FormLabel>
+                            <FormLabel className="text-gray-700 dark:text-gray-300">{t('create.personalInfo.email')}</FormLabel>
                             <FormControl>
                               <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">

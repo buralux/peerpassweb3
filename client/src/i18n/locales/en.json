@@ -106,6 +106,16 @@
     "socialMedia": "Social Media",
     "appearance": "Appearance",
     "preview": "Preview",
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Enter your basic professional details.",
+      "fullName": "Full Name",
+      "jobTitle": "Job Title",
+      "company": "Company",
+      "bio": "Bio",
+      "email": "Email",
+      "phone": "Phone"
+    },
     "fullName": "Full Name",
     "jobTitle": "Job Title",
     "company": "Company",

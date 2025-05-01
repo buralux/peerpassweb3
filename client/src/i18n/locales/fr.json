@@ -106,6 +106,16 @@
     "socialMedia": "Réseaux sociaux",
     "appearance": "Apparence",
     "preview": "Aperçu",
+    "personalInfo": {
+      "title": "Informations personnelles",
+      "subtitle": "Saisissez vos informations professionnelles de base.",
+      "fullName": "Nom complet",
+      "jobTitle": "Intitulé du poste",
+      "company": "Entreprise",
+      "bio": "Biographie",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
     "fullName": "Nom complet",
     "jobTitle": "Intitulé du poste",
     "company": "Entreprise",

@@ -211,28 +211,12 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         </div>
         
         {/* Flip indicator */}
-        <div className="absolute right-2 bottom-2 text-gray-400 dark:text-gray-500 text-[10px] flex items-center opacity-50 z-10">
+        <div className="absolute right-2 bottom-2 text-gray-400 dark:text-gray-500 text-[10px] flex items-center opacity-70 hover:opacity-100 z-10 bg-black/10 dark:bg-white/10 backdrop-blur-sm px-2 py-1 rounded-full transition-opacity">
           <span className="material-icons text-xs mr-0.5">360</span>
           <span>{t('cards.tapToFlip')}</span>
         </div>
         
-        {/* Details button */}
-        {!isPreview && (
-          <div 
-            className="absolute bottom-2 left-2 z-30"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Link href={`/card/${card.id}`}>
-              <button 
-                className="bg-primary text-white text-xs px-3 py-1 rounded-full flex items-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span className="material-icons text-xs mr-1">info</span>
-                {t('cards.viewDetails')}
-              </button>
-            </Link>
-          </div>
-        )}
+        {/* Details button - SUPPRIMÉ */}
       </div>
     </div>
   );

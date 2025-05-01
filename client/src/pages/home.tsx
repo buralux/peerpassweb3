@@ -116,6 +116,10 @@ const DEMO_COLLECTED_CARDS: BusinessCard[] = [
       linkedin: "https://linkedin.com/in/mouradfakir"
     },
     metadata: {},
+    customization: {
+      fontWeight: 'bold',
+      shadowIntensity: 'strong'
+    },
     ipfsHash: null,
     isMinted: true,
     createdAt: new Date(),
@@ -140,6 +144,10 @@ const DEMO_COLLECTED_CARDS: BusinessCard[] = [
       twitter: "https://twitter.com/karim_omari"
     },
     metadata: {},
+    customization: {
+      fontFamily: 'Playfair Display',
+      glowEffect: true
+    },
     ipfsHash: null,
     isMinted: true,
     createdAt: new Date(),

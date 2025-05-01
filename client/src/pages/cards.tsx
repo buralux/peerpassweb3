@@ -27,6 +27,11 @@ const DEMO_CARDS: BusinessCard[] = [
     avatarUrl: null,
     socialLinks: {"twitter": "https://twitter.com/azizlaghzaoui", "linkedin": "https://linkedin.com/in/azizlaghzaoui"},
     metadata: {},
+    customization: {
+      fontFamily: 'Poppins',
+      nameFontSize: '26px',
+      shadowIntensity: 'medium'
+    },
     ipfsHash: "ipfs://QmDemo2",
     isMinted: true,
     createdAt: new Date("2023-02-20"),
@@ -48,6 +53,11 @@ const DEMO_CARDS: BusinessCard[] = [
     avatarUrl: null,
     socialLinks: {"linkedin": "https://linkedin.com/in/ali-hamayet", "twitter": "https://twitter.com/alihamayet"},
     metadata: {},
+    customization: {
+      fontFamily: 'Inter',
+      fontWeight: 'semibold',
+      borderRadius: 12
+    },
     ipfsHash: "ipfs://QmDemo1",
     isMinted: true,
     createdAt: new Date("2023-01-15"),
@@ -72,6 +82,11 @@ const DEMO_COLLECTED_CARDS: BusinessCard[] = [
     avatarUrl: null,
     socialLinks: {"linkedin": "https://linkedin.com/in/marcleblanc"},
     metadata: {},
+    customization: {
+      fontFamily: 'system-ui',
+      contentAlignment: 'left',
+      glowEffect: true
+    },
     ipfsHash: "ipfs://QmDemo3",
     isMinted: true,
     createdAt: new Date("2023-03-10"),

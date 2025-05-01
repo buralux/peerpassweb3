@@ -34,7 +34,14 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     // Empêcher la navigation et autres comportements par défaut
     e.preventDefault();
     e.stopPropagation();
-    setShowBack(!showBack);
+    
+    // Ne pas retourner la carte si on clique sur le bouton de détails
+    const target = e.target as HTMLElement;
+    const isButtonClick = target.closest('button') !== null;
+    
+    if (!isButtonClick) {
+      setShowBack(!showBack);
+    }
   };
   
   return (
@@ -222,14 +229,16 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
         
         {/* Details button */}
         {!isPreview && (
-          <a 
-            href={`/card/${card.id}`}
+          <button 
             className="absolute bottom-2 left-2 bg-primary text-white text-xs px-3 py-1 rounded-full flex items-center z-20"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = `/card/${card.id}`;
+            }}
           >
             <span className="material-icons text-xs mr-1">info</span>
             {t('cards.viewDetails')}
-          </a>
+          </button>
         )}
       </div>
     </div>
